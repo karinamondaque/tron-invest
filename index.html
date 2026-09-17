@@ -8,6 +8,13 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Iconos FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- Soporte PWA -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#020617">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Quantum AI">
+  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2152/2152539.png">
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen pb-24">
 
@@ -517,6 +524,14 @@
 
       liveToast.innerHTML = `Usuario <span class="text-slate-200 font-mono">${randomAddr}</span> acaba de ${action} <span class="${color} font-semibold">$${randomAmount} USDT</span>`;
     }, 5000);
+  // Registro del Service Worker para PWA
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js')
+          .then(() => console.log('PWA registrada correctamente'))
+          .catch((err) => console.log('Error al registrar PWA', err));
+      });
+    }
   </script>
 </body>
 </html>
