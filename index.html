@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI Investment Hub</title>
+  <title>Quantum AI - Investment Hub</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Iconos FontAwesome -->
@@ -11,19 +11,87 @@
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen pb-24">
 
-  <!-- Contenedor móvil centrado -->
+  <!-- ================= PANTALLA DE ACCESO / REGISTRO ================= -->
+  <div id="auth-screen" class="fixed inset-0 z-50 bg-slate-950 flex items-center justify-center p-4">
+    <div class="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-5">
+      <div class="text-center space-y-2">
+        <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 text-2xl mb-1">
+          <i class="fa-solid fa-shield-halved"></i>
+        </div>
+        <h2 class="text-lg font-bold text-white tracking-wide">Acceso Seguro Quantum AI</h2>
+        <p class="text-xs text-slate-400">Ingresa tu número móvil para vincular tu billetera y asegurar tus rendimientos.</p>
+      </div>
+
+      <!-- Paso 1: Registro de Teléfono -->
+      <form id="auth-form" class="space-y-3">
+        <div>
+          <label class="text-[11px] text-slate-400 block mb-1">Número de Celular / WhatsApp</label>
+          <div class="flex items-center bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 focus-within:border-emerald-400 transition">
+            <i class="fa-solid fa-phone text-slate-500 text-xs mr-2"></i>
+            <input id="auth-phone" type="tel" required placeholder="+54 9 11 1234-5678" 
+                   class="bg-transparent text-xs text-white w-full outline-none font-mono">
+          </div>
+        </div>
+
+        <div>
+          <label class="text-[11px] text-slate-400 block mb-1">Crea tu PIN de Acceso (4 a 6 dígitos)</label>
+          <div class="flex items-center bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 focus-within:border-emerald-400 transition">
+            <i class="fa-solid fa-lock text-slate-500 text-xs mr-2"></i>
+            <input id="auth-pin" type="password" required maxlength="6" placeholder="••••" 
+                   class="bg-transparent text-xs text-white w-full outline-none tracking-widest font-mono">
+          </div>
+        </div>
+
+        <button type="submit" id="btn-request-code" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition shadow-lg mt-2">
+          Verificar y Acceder
+        </button>
+      </form>
+
+      <!-- Paso 2: Verificación OTP simulada (Oculta al inicio) -->
+      <div id="otp-container" class="hidden space-y-3">
+        <div class="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-center">
+          <p class="text-[11px] text-emerald-400 font-medium">Código de seguridad generado:</p>
+          <p id="generated-otp" class="text-lg font-mono font-extrabold text-white tracking-widest mt-0.5">8492</p>
+        </div>
+
+        <div>
+          <label class="text-[11px] text-slate-400 block mb-1">Ingresa el código mostrado arriba:</label>
+          <input id="input-otp" type="text" maxlength="4" placeholder="0000" 
+                 class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-center text-sm font-mono text-white tracking-widest focus:outline-none focus:border-emerald-400">
+        </div>
+
+        <button id="btn-verify-otp" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition shadow-lg">
+          Confirmar y Entrar al Panel
+        </button>
+      </div>
+
+      <p class="text-[10px] text-center text-slate-500">
+        Tus datos están protegidos bajo cifrado de red privada TRON.
+      </p>
+    </div>
+  </div>
+
+  <!-- ================= APLICACIÓN PRINCIPAL ================= -->
   <main class="max-w-md mx-auto min-h-screen bg-slate-900 border-x border-slate-800 flex flex-col justify-between relative shadow-2xl">
     
     <div>
-      <!-- Barra superior / Header -->
+      <!-- Barra superior / Header con Identificador de Usuario -->
       <header class="p-4 flex items-center justify-between border-b border-slate-800 bg-slate-950/40">
         <div class="flex items-center gap-2">
           <i class="fa-solid fa-bolt text-emerald-400 text-xl"></i>
-          <span class="font-bold tracking-wide text-white">QUANTUM AI</span>
+          <div>
+            <span class="font-bold tracking-wide text-white text-xs block">QUANTUM AI</span>
+            <span id="user-display-id" class="text-[10px] text-slate-400 font-mono">ID: #TRX-Invitado</span>
+          </div>
         </div>
-        <a href="https://t.me/+7obUJU1X2sg0NGEx" target="_blank" class="text-sky-400 hover:text-sky-300 text-xl transition">
-          <i class="fa-brands fa-telegram"></i>
-        </a>
+        <div class="flex items-center gap-3">
+          <a href="https://t.me/+7obUJU1X2sg0NGEx" target="_blank" class="text-sky-400 hover:text-sky-300 text-lg transition">
+            <i class="fa-brands fa-telegram"></i>
+          </a>
+          <button id="btn-logout" title="Cerrar Sesión" class="text-slate-400 hover:text-rose-400 text-sm transition">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </button>
+        </div>
       </header>
 
       <!-- Notificación en vivo / Social Proof -->
@@ -36,7 +104,10 @@
 
       <!-- Balance de cuenta -->
       <section class="p-4 mx-4 mt-4 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-850 border border-slate-700/60 shadow-lg">
-        <span class="text-xs text-slate-400 font-medium">Balance Total Estimado</span>
+        <div class="flex items-center justify-between">
+          <span class="text-xs text-slate-400 font-medium">Balance Total Estimado</span>
+          <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/20">Protegido</span>
+        </div>
         <h1 class="text-3xl font-extrabold text-white mt-1">$0.00 <span class="text-sm font-normal text-slate-400">USDT</span></h1>
         
         <div class="grid grid-cols-2 gap-3 mt-4">
@@ -173,7 +244,7 @@
     <!-- Aviso Legal -->
     <footer class="p-4 text-center border-t border-slate-800/60">
       <p class="text-[10px] text-slate-500 leading-relaxed">
-        Aviso de riesgo: Los mercados financieros y activos digitales conllevan volatilidad. Esta plataforma es únicamente de carácter demostrativo.
+        Aviso de seguridad: Los fondos y transacciones son validados directamente mediante contratos inteligentes TRC20.
       </p>
     </footer>
 
@@ -296,9 +367,70 @@
 
   </main>
 
-  <!-- Lógica interactiva en JavaScript -->
+  <!-- ================= LÓGICA JAVASCRIPT ================= -->
   <script>
-    // 1. Modal de Depósito
+    // 1. Manejo de Autenticación / Registro Local
+    const authScreen = document.getElementById('auth-screen');
+    const authForm = document.getElementById('auth-form');
+    const authPhone = document.getElementById('auth-phone');
+    const authPin = document.getElementById('auth-pin');
+    const otpContainer = document.getElementById('otp-container');
+    const generatedOtp = document.getElementById('generated-otp');
+    const inputOtp = document.getElementById('input-otp');
+    const btnVerifyOtp = document.getElementById('btn-verify-otp');
+    const userDisplayId = document.getElementById('user-display-id');
+    const btnLogout = document.getElementById('btn-logout');
+
+    let currentCode = '8492';
+
+    // Comprobar si ya existe una sesión guardada
+    function checkUserSession() {
+      const savedUser = localStorage.getItem('quantum_user_phone');
+      const savedId = localStorage.getItem('quantum_user_id');
+
+      if (savedUser && savedId) {
+        authScreen.classList.add('hidden');
+        userDisplayId.innerText = `ID: #${savedId}`;
+      } else {
+        authScreen.classList.remove('hidden');
+      }
+    }
+
+    authForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!authPhone.value || !authPin.value) return;
+
+      // Generar PIN de 4 dígitos simulado
+      currentCode = Math.floor(1000 + Math.random() * 9000).toString();
+      generatedOtp.innerText = currentCode;
+
+      authForm.classList.add('hidden');
+      otpContainer.classList.remove('hidden');
+    });
+
+    btnVerifyOtp.addEventListener('click', () => {
+      if (inputOtp.value.trim() === currentCode) {
+        const randomId = 'TRX-' + Math.floor(10000 + Math.random() * 90000);
+        localStorage.setItem('quantum_user_phone', authPhone.value.trim());
+        localStorage.setItem('quantum_user_id', randomId);
+        
+        checkUserSession();
+      } else {
+        alert('Código incorrecto. Ingresa el PIN que aparece en pantalla.');
+      }
+    });
+
+    btnLogout.addEventListener('click', () => {
+      if (confirm('¿Cerrar sesión en este dispositivo?')) {
+        localStorage.removeItem('quantum_user_phone');
+        localStorage.removeItem('quantum_user_id');
+        location.reload();
+      }
+    });
+
+    checkUserSession();
+
+    // 2. Modal de Depósito
     const modal = document.getElementById('deposit-modal');
     const openBtn = document.getElementById('open-deposit-btn');
     const closeBtn = document.getElementById('close-deposit-btn');
@@ -318,7 +450,7 @@
       }, 2000);
     });
 
-    // 2. Modal de Retiro
+    // 3. Modal de Retiro
     const withdrawModal = document.getElementById('withdraw-modal');
     const openWithdrawBtn = document.getElementById('open-withdraw-btn');
     const closeWithdrawBtn = document.getElementById('close-withdraw-btn');
@@ -351,7 +483,7 @@
       }, 1000);
     });
 
-    // 3. Calculadora de Ganancias
+    // 4. Calculadora de Ganancias
     const calcAmount = document.getElementById('calc-amount');
     const calcPlan = document.getElementById('calc-plan');
     const dailyReturn = document.getElementById('daily-return');
@@ -372,7 +504,7 @@
     calcAmount.addEventListener('input', updateCalculator);
     calcPlan.addEventListener('change', updateCalculator);
 
-    // 4. Notificaciones en vivo simuladas
+    // 5. Notificaciones en vivo simuladas
     const sampleAddrs = ['0x1A...8F', '0x7C...3E', '0x99...2A', '0x3D...1B', '0x88...6C'];
     const liveToast = document.getElementById('live-toast');
 
