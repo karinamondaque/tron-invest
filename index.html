@@ -81,7 +81,7 @@
         </div>
       </section>
 
-      <!-- Tasa ARS -->
+      <!-- Cotización P2P ARS -->
       <section class="mx-4 mt-3 px-3 py-1.5 rounded-xl bg-slate-800/60 border border-slate-700/60 flex items-center justify-between text-xs">
         <span class="text-slate-400 flex items-center gap-1.5">
           <i class="fa-solid fa-money-bill-transfer text-emerald-400"></i> Referencia P2P:
@@ -108,7 +108,51 @@
         </div>
       </section>
 
-      <!-- Simulador / Calculadora -->
+      <!-- TEMPORIZADOR DE PLANES ACTIVOS (CUENTA REGRESIVA) -->
+      <section id="active-plan-section" class="p-4 mx-4 mt-3 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 hidden">
+        <div class="flex items-center justify-between mb-2">
+          <div class="flex items-center gap-2">
+            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <h2 id="active-plan-title" class="text-xs font-bold text-emerald-400 uppercase tracking-wide">Plan Activo: $30 USDT</h2>
+          </div>
+          <span id="active-plan-retorno" class="text-[11px] font-mono font-bold text-white">Obj: $51.00 USDT</span>
+        </div>
+        <p class="text-[11px] text-slate-400 mb-2">Tiempo restante para liberación y rendimiento:</p>
+        <div class="grid grid-cols-3 gap-2 text-center mb-3">
+          <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
+            <span id="timer-days" class="text-sm font-extrabold text-white font-mono block">00</span>
+            <span class="text-[9px] text-slate-400 uppercase">Días</span>
+          </div>
+          <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
+            <span id="timer-hours" class="text-sm font-extrabold text-white font-mono block">00</span>
+            <span class="text-[9px] text-slate-400 uppercase">Horas</span>
+          </div>
+          <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
+            <span id="timer-mins" class="text-sm font-extrabold text-white font-mono block">00</span>
+            <span class="text-[9px] text-slate-400 uppercase">Minutos</span>
+          </div>
+        </div>
+        <!-- Barra de Progreso -->
+        <div class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden border border-slate-800">
+          <div id="active-plan-progress" class="bg-emerald-500 h-1.5 rounded-full transition-all duration-500" style="width: 15%"></div>
+        </div>
+      </section>
+
+      <!-- HISTORIAL DE MOVIMIENTOS -->
+      <section class="mx-4 mt-3 rounded-2xl bg-slate-800/40 border border-slate-750 p-3.5">
+        <div class="flex items-center justify-between mb-2.5">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+            <i class="fa-solid fa-clock-rotate-left text-emerald-400"></i> Mis Movimientos
+          </h2>
+          <span class="text-[10px] text-slate-400 font-mono" id="movs-count">0 operaciones</span>
+        </div>
+        <div id="movs-list" class="space-y-2 max-h-40 overflow-y-auto pr-1">
+          <!-- Movimientos generados dinámicamente -->
+          <p id="movs-empty" class="text-[11px] text-slate-500 text-center py-2">No registras movimientos aún.</p>
+        </div>
+      </section>
+
+      <!-- Calculadora -->
       <section class="p-4 mx-4 mt-3 rounded-2xl bg-slate-800/40 border border-slate-750">
         <div class="flex justify-between items-center mb-3">
           <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
@@ -153,12 +197,10 @@
         </div>
       </section>
 
-      <!-- Lista de Planes de Depósito -->
+      <!-- Lista de 11 Planes -->
       <section class="p-4">
         <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-3">Planes de Depósito</h2>
-        <div id="plans-container" class="space-y-2.5">
-          <!-- Generado automáticamente por JavaScript con los 11 planes -->
-        </div>
+        <div id="plans-container" class="space-y-2.5"></div>
       </section>
     </div>
 
@@ -185,26 +227,18 @@
           <h3 class="text-sm font-bold text-white flex items-center gap-2">
             <i class="fa-solid fa-wallet text-emerald-400"></i> Métodos de Depósito
           </h3>
-          <button id="close-deposit-btn" class="text-slate-400 hover:text-white">
-            <i class="fa-solid fa-xmark text-lg"></i>
-          </button>
+          <button id="close-deposit-btn" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
         </div>
 
-        <!-- Selector de Métodos -->
+        <!-- Selector Red / Lemon -->
         <div class="grid grid-cols-2 p-1 bg-slate-950 rounded-xl border border-slate-800 text-xs">
-          <button id="tab-crypto" class="py-1.5 rounded-lg font-semibold bg-emerald-500 text-slate-950 transition">
-            USDT (TRC20)
-          </button>
-          <button id="tab-ars" class="py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white transition">
-            Pesos (Lemon)
-          </button>
+          <button id="tab-crypto" class="py-1.5 rounded-lg font-semibold bg-emerald-500 text-slate-950 transition">USDT (TRC20)</button>
+          <button id="tab-ars" class="py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white transition">Pesos (Lemon)</button>
         </div>
 
-        <!-- Vista 1: Cripto USDT -->
         <div id="deposit-crypto-view" class="space-y-3">
           <div class="flex justify-center py-1">
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TEvGPxqED9D5UKk19gEzcW1u12ADWM8Nq9" 
-                 alt="QR Depósito" class="w-32 h-32 rounded-xl border-2 border-slate-700 p-1 bg-white">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TEvGPxqED9D5UKk19gEzcW1u12ADWM8Nq9" alt="QR Depósito" class="w-32 h-32 rounded-xl border-2 border-slate-700 p-1 bg-white">
           </div>
           <div>
             <label class="text-[11px] text-slate-400 block mb-1">Dirección TRC20 Oficial:</label>
@@ -215,11 +249,10 @@
           </div>
         </div>
 
-        <!-- Vista 2: Transferencia ARS Lemon -->
         <div id="deposit-ars-view" class="space-y-3 hidden">
           <div class="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl space-y-1">
             <span class="text-[11px] text-emerald-400 block font-medium">Transferencia Bancaria / Billetera Virtual:</span>
-            <p class="text-xs text-slate-200">Cotización fijada: <strong>1 USDT = $1.600 ARS</strong></p>
+            <p class="text-xs text-slate-200">Cotización: <strong>1 USDT = $1.600 ARS</strong></p>
           </div>
           <div>
             <label class="text-[11px] text-slate-400 block mb-1">Alias Oficial Lemon Cash:</label>
@@ -230,20 +263,14 @@
           </div>
         </div>
 
-        <!-- Formulario Notificar Comprobante -->
         <div class="border-t border-slate-800 pt-3 space-y-2">
           <label class="text-[11px] text-slate-300 font-bold block">Registrar Depósito Realizado:</label>
-          <input id="deposit-input-amount" type="number" placeholder="Monto depositado (ej: 30 USD)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-400 font-mono">
-          <input id="deposit-input-hash" type="text" placeholder="N° de Comprobante / Hash / Operación" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-400 font-mono">
-          
+          <input id="deposit-input-amount" type="number" placeholder="Monto depositado (ej: 30 USD)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white outline-none focus:border-emerald-400 font-mono">
+          <input id="deposit-input-hash" type="text" placeholder="N° de Comprobante / Operación / Hash" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white outline-none focus:border-emerald-400 font-mono">
           <button id="btn-submit-deposit" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition">
             Enviar Comprobante a Validación
           </button>
         </div>
-
-        <a href="https://t.me/+7obUJU1X2sg0NGEx" target="_blank" class="block w-full py-2 bg-sky-500/20 hover:bg-sky-500/30 text-sky-400 text-xs font-semibold text-center rounded-xl transition">
-          <i class="fa-brands fa-telegram mr-1"></i> Abrir Chat de Validación Telegram
-        </a>
       </div>
     </div>
 
@@ -251,13 +278,11 @@
     <div id="withdraw-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
       <div class="bg-slate-900 border border-slate-750 w-full max-w-sm rounded-2xl p-5 shadow-2xl space-y-4">
         <div class="flex items-center justify-between">
-          <h3 class="text-sm font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-arrow-up text-sky-400"></i> Solicitar Retiro
-          </h3>
+          <h3 class="text-sm font-bold text-white flex items-center gap-2"><i class="fa-solid fa-arrow-up text-sky-400"></i> Solicitar Retiro</h3>
           <button id="close-withdraw-btn" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
         </div>
         <div class="space-y-3">
-          <input id="withdraw-address" type="text" placeholder="Billetera TRC20 o Alias" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-sky-400 font-mono">
+          <input id="withdraw-address" type="text" placeholder="Billetera USDT TRC20 o Alias" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-sky-400 font-mono">
           <input id="withdraw-amount" type="number" min="10" placeholder="Monto USDT (Mínimo $10)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-sky-400 font-mono">
           <button id="btn-confirm-withdraw" class="w-full py-2.5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs rounded-xl transition">Confirmar Retiro</button>
         </div>
@@ -269,7 +294,6 @@
   <script>
     const ARS_RATE = 1600;
 
-    // 11 Planes configurados
     const PLANS = [
       { usd: 10, days: 15, rate: 0.025, name: "Plan Starter 10" },
       { usd: 25, days: 20, rate: 0.028, name: "Plan Starter 25" },
@@ -288,7 +312,7 @@
       return new Intl.NumberFormat('es-AR').format(Math.round(n));
     }
 
-    // Renderizado dinámico de tarjetas
+    // Renderizar Planes
     const plansContainer = document.getElementById('plans-container');
     plansContainer.innerHTML = PLANS.map(p => {
       const ars = p.usd * ARS_RATE;
@@ -310,7 +334,7 @@
       `;
     }).join('');
 
-    // Gestión de Usuarios y Persistencia
+    // Usuarios y Persistencia
     let currentUser = null;
 
     function getUsersDB() {
@@ -327,6 +351,7 @@
         const db = getUsersDB();
         if (db[activePhone]) {
           currentUser = db[activePhone];
+          if (!currentUser.movimientos) currentUser.movimientos = [];
           mostrarPanel();
           return;
         }
@@ -347,8 +372,87 @@
       } else {
         badge.classList.add('hidden');
       }
+
+      renderizarMovimientos();
+      iniciarTemporizador();
     }
 
+    // Renderizar Historial de Movimientos
+    function renderizarMovimientos() {
+      const movsList = document.getElementById('movs-list');
+      const movsCount = document.getElementById('movs-count');
+      const emptyMsg = document.getElementById('movs-empty');
+
+      if (!currentUser.movimientos || currentUser.movimientos.length === 0) {
+        movsList.innerHTML = '<p class="text-[11px] text-slate-500 text-center py-2">No registras movimientos aún.</p>';
+        movsCount.innerText = '0 operaciones';
+        return;
+      }
+
+      movsCount.innerText = `${currentUser.movimientos.length} operaciones`;
+      movsList.innerHTML = currentUser.movimientos.slice().reverse().map(m => {
+        const isDep = m.tipo === 'Depósito';
+        const color = isDep ? (m.estado === 'Aprobado' ? 'text-emerald-400' : 'text-amber-400') : 'text-sky-400';
+        const badgeBg = m.estado === 'Aprobado' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-300';
+        return `
+          <div class="p-2 rounded-xl bg-slate-950/70 border border-slate-800 flex items-center justify-between text-xs">
+            <div>
+              <span class="font-bold text-white block text-[11px]">${m.tipo} ${m.monto} USDT</span>
+              <span class="text-[9px] text-slate-400">${m.fecha} • ${m.ref}</span>
+            </div>
+            <span class="text-[10px] px-2 py-0.5 rounded-full border ${badgeBg}">${m.estado}</span>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Temporizador de Cuenta Regresiva
+    let timerInterval = null;
+    function iniciarTemporizador() {
+      const sec = document.getElementById('active-plan-section');
+      if (!currentUser.activePlan) {
+        sec.classList.add('hidden');
+        return;
+      }
+
+      sec.classList.remove('hidden');
+      document.getElementById('active-plan-title').innerText = `Plan Activo: $${currentUser.activePlan.amount} USDT`;
+      document.getElementById('active-plan-retorno').innerText = `Obj: $${currentUser.activePlan.targetUsd.toFixed(2)} USDT`;
+
+      if (timerInterval) clearInterval(timerInterval);
+
+      function updateTimer() {
+        const now = new Date().getTime();
+        const diff = currentUser.activePlan.endTime - now;
+
+        if (diff <= 0) {
+          clearInterval(timerInterval);
+          document.getElementById('timer-days').innerText = "00";
+          document.getElementById('timer-hours').innerText = "00";
+          document.getElementById('timer-mins').innerText = "00";
+          document.getElementById('active-plan-progress').style.width = '100%';
+          return;
+        }
+
+        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+        document.getElementById('timer-days').innerText = String(d).padStart(2, '0');
+        document.getElementById('timer-hours').innerText = String(h).padStart(2, '0');
+        document.getElementById('timer-mins').innerText = String(m).padStart(2, '0');
+
+        const totalDuration = currentUser.activePlan.endTime - currentUser.activePlan.startTime;
+        const elapsed = now - currentUser.activePlan.startTime;
+        const pct = Math.min(100, Math.max(0, (elapsed / totalDuration) * 100));
+        document.getElementById('active-plan-progress').style.width = `${pct}%`;
+      }
+
+      updateTimer();
+      timerInterval = setInterval(updateTimer, 60000);
+    }
+
+    // Login y Registro
     document.getElementById('auth-form').addEventListener('submit', (e) => {
       e.preventDefault();
       const phone = document.getElementById('auth-phone').value.trim();
@@ -356,18 +460,18 @@
 
       const db = getUsersDB();
       if (!db[phone]) {
-        // Nuevo usuario
         db[phone] = {
           phone: phone,
           pin: pin,
           id: 'TRX-' + Math.floor(10000 + Math.random() * 90000),
           balance: 0.0,
-          pendingDeposit: 0.0
+          pendingDeposit: 0.0,
+          movimientos: [],
+          activePlan: null
         };
       } else {
-        // Validación de usuario existente
         if (db[phone].pin !== pin) {
-          alert('PIN incorrecto para este número móvil.');
+          alert('PIN incorrecto para este número.');
           return;
         }
       }
@@ -384,7 +488,7 @@
       }
     });
 
-    // Control Calculadora
+    // Calculadora interactiva
     const calcSelect = document.getElementById('calc-plan-select');
     function updateCalc() {
       const opt = calcSelect.selectedOptions[0];
@@ -414,7 +518,7 @@
       document.getElementById('deposit-modal').classList.remove('hidden');
     };
 
-    // Pestañas Depósito (Cripto vs ARS Lemon)
+    // Tabs modal depósito
     const tabCrypto = document.getElementById('tab-crypto');
     const tabArs = document.getElementById('tab-ars');
     const cryptoView = document.getElementById('deposit-crypto-view');
@@ -442,7 +546,6 @@
       setTimeout(() => btn.innerText = prev, 1500);
     };
 
-    // Modales abrir/cerrar
     const depModal = document.getElementById('deposit-modal');
     document.getElementById('open-deposit-btn').addEventListener('click', () => depModal.classList.remove('hidden'));
     document.getElementById('close-deposit-btn').addEventListener('click', () => depModal.classList.add('hidden'));
@@ -451,7 +554,7 @@
     document.getElementById('open-withdraw-btn').addEventListener('click', () => withModal.classList.remove('hidden'));
     document.getElementById('close-withdraw-btn').addEventListener('click', () => withModal.classList.add('hidden'));
 
-    // Envío y registro de comprobante
+    // Envío y registro de comprobante con mensaje a Telegram
     document.getElementById('btn-submit-deposit').addEventListener('click', () => {
       const monto = parseFloat(document.getElementById('deposit-input-amount').value);
       const hash = document.getElementById('deposit-input-hash').value.trim();
@@ -462,29 +565,112 @@
       }
 
       currentUser.pendingDeposit = monto;
+      if (!currentUser.movimientos) currentUser.movimientos = [];
+      currentUser.movimientos.push({
+        tipo: 'Depósito',
+        monto: monto,
+        fecha: new Date().toLocaleDateString('es-AR'),
+        ref: hash.substring(0, 10) + '...',
+        estado: 'En revisión'
+      });
+
       const db = getUsersDB();
       db[currentUser.phone] = currentUser;
       saveUsersDB(db);
 
       mostrarPanel();
       depModal.classList.add('hidden');
-      alert(`Comprobante por $${monto} USD registrado con éxito. Recuerda avisar por Telegram para acreditación inmediata.`);
-      window.open(`https://t.me/+7obUJU1X2sg0NGEx`, '_blank');
+
+      const mensaje = encodeURIComponent(
+        `Hola Soporte Quantum AI. Acabo de realizar un depósito:\n` +
+        `• Usuario: #${currentUser.id} (${currentUser.phone})\n` +
+        `• Monto: $${monto} USD (~$${formatNumber(monto * ARS_RATE)} ARS)\n` +
+        `• Operación/Hash: ${hash}`
+      );
+      window.open(`https://t.me/+7obUJU1X2sg0NGEx?text=${mensaje}`, '_blank');
     });
 
-    // Función para el Administrador: Aprobar recargas manualmente desde la consola del navegador
+    // Retiros
+    document.getElementById('btn-confirm-withdraw').addEventListener('click', () => {
+      const amt = parseFloat(document.getElementById('withdraw-amount').value);
+      const addr = document.getElementById('withdraw-address').value.trim();
+
+      if (!addr || isNaN(amt) || amt < 10) {
+        alert('Ingresa una dirección válida y un monto mínimo de $10 USD.');
+        return;
+      }
+
+      if (amt > currentUser.balance) {
+        alert('Saldo insuficiente para realizar este retiro.');
+        return;
+      }
+
+      currentUser.balance -= amt;
+      currentUser.movimientos.push({
+        tipo: 'Retiro',
+        monto: amt,
+        fecha: new Date().toLocaleDateString('es-AR'),
+        ref: addr.substring(0, 8) + '...',
+        estado: 'En proceso'
+      });
+
+      const db = getUsersDB();
+      db[currentUser.phone] = currentUser;
+      saveUsersDB(db);
+
+      mostrarPanel();
+      withModal.classList.add('hidden');
+      alert(`Solicitud de retiro por $${amt} USDT en proceso.`);
+    });
+
+    // PANEL DE ADMINISTRADOR VÍA CONSOLA
     window.aprobarRecarga = function(monto) {
       if (!currentUser) return console.log("No hay usuario activo.");
       currentUser.balance += monto;
       currentUser.pendingDeposit = Math.max(0, currentUser.pendingDeposit - monto);
+      
+      currentUser.movimientos.forEach(m => {
+        if (m.tipo === 'Depósito' && m.estado === 'En revisión') m.estado = 'Aprobado';
+      });
+
       const db = getUsersDB();
       db[currentUser.phone] = currentUser;
       saveUsersDB(db);
       mostrarPanel();
-      console.log(`¡Saldo acreditado con éxito! Nuevo balance: $${currentUser.balance} USDT`);
+      console.log(`¡Recarga de $${monto} USD aprobada con éxito!`);
     };
 
-    // Feed de transacciones simuladas
+    window.activarPlan = function(monto, dias, tasa) {
+      if (!currentUser) return console.log("No hay usuario activo.");
+      const startTime = new Date().getTime();
+      const endTime = startTime + (dias * 24 * 60 * 60 * 1000);
+      const targetUsd = monto + (monto * tasa * dias);
+
+      currentUser.activePlan = {
+        amount: monto,
+        days: dias,
+        rate: tasa,
+        startTime: startTime,
+        endTime: endTime,
+        targetUsd: targetUsd
+      };
+
+      currentUser.movimientos.push({
+        tipo: 'Plan Activado',
+        monto: monto,
+        fecha: new Date().toLocaleDateString('es-AR'),
+        ref: `${dias} Días (${(tasa*100).toFixed(1)}%/d)`,
+        estado: 'Aprobado'
+      });
+
+      const db = getUsersDB();
+      db[currentUser.phone] = currentUser;
+      saveUsersDB(db);
+      mostrarPanel();
+      console.log(`Plan de $${monto} USD por ${dias} días activado.`);
+    };
+
+    // Feed de transacciones en vivo
     const sampleAddrs = ['0x1A...8F', '0x7C...3E', '0x99...2A', '0x3D...1B', '0x88...6C'];
     const sampleAmounts = [10, 25, 30, 50, 75, 100, 250, 500];
     setInterval(() => {
@@ -494,8 +680,8 @@
       document.getElementById('live-toast').innerHTML = `Usuario <span class="text-slate-200 font-mono">${addr}</span> acaba de ${isDep ? 'recargar' : 'retirar'} <span class="${isDep ? 'text-emerald-400' : 'text-sky-400'} font-semibold">$${amt} USDT ($${formatNumber(amt * ARS_RATE)} ARS)</span>`;
     }, 5000);
 
-    // Iniciar verificación de sesión
     initSession();
   </script>
 </body>
 </html>
+
