@@ -3,12 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quantum AI - Investment Hub</title>
-  <!-- Tailwind CSS CDN -->
+  <title>Quantum AI - Investment Platform</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Iconos FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<!-- Soporte PWA -->
   <link rel="manifest" href="./manifest.json">
   <meta name="theme-color" content="#020617">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -18,63 +15,38 @@
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen pb-24">
 
-  <!-- ================= PANTALLA DE ACCESO / REGISTRO ================= -->
+  <!-- ================= ACCESO Y REGISTRO INDIVIDUAL ================= -->
   <div id="auth-screen" class="fixed inset-0 z-50 bg-slate-950 flex items-center justify-center p-4">
     <div class="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-5">
-      <div class="text-center space-y-2">
+      <div class="text-center space-y-1">
         <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 text-2xl mb-1">
           <i class="fa-solid fa-shield-halved"></i>
         </div>
         <h2 class="text-lg font-bold text-white tracking-wide">Acceso Seguro Quantum AI</h2>
-        <p class="text-xs text-slate-400">Ingresa tu número móvil para vincular tu billetera y asegurar tus rendimientos.</p>
+        <p class="text-xs text-slate-400">Inicia sesión con tu móvil o regístrate si eres nuevo.</p>
       </div>
 
-      <!-- Paso 1: Registro de Teléfono -->
       <form id="auth-form" class="space-y-3">
         <div>
           <label class="text-[11px] text-slate-400 block mb-1">Número de Celular / WhatsApp</label>
-          <div class="flex items-center bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 focus-within:border-emerald-400 transition">
+          <div class="flex items-center bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 focus-within:border-emerald-400 transition">
             <i class="fa-solid fa-phone text-slate-500 text-xs mr-2"></i>
-            <input id="auth-phone" type="tel" required placeholder="+54 9 11 1234-5678" 
-                   class="bg-transparent text-xs text-white w-full outline-none font-mono">
+            <input id="auth-phone" type="tel" required placeholder="+54 9 11 1234-5678" class="bg-transparent text-xs text-white w-full outline-none font-mono">
           </div>
         </div>
 
         <div>
-          <label class="text-[11px] text-slate-400 block mb-1">Crea tu PIN de Acceso (4 a 6 dígitos)</label>
-          <div class="flex items-center bg-slate-950 border border-slate-700 rounded-xl px-3 py-2.5 focus-within:border-emerald-400 transition">
+          <label class="text-[11px] text-slate-400 block mb-1">PIN de Seguridad (4 a 6 dígitos)</label>
+          <div class="flex items-center bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 focus-within:border-emerald-400 transition">
             <i class="fa-solid fa-lock text-slate-500 text-xs mr-2"></i>
-            <input id="auth-pin" type="password" required maxlength="6" placeholder="••••" 
-                   class="bg-transparent text-xs text-white w-full outline-none tracking-widest font-mono">
+            <input id="auth-pin" type="password" required maxlength="6" placeholder="••••" class="bg-transparent text-xs text-white w-full outline-none tracking-widest font-mono">
           </div>
         </div>
 
-        <button type="submit" id="btn-request-code" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition shadow-lg mt-2">
-          Verificar y Acceder
+        <button type="submit" id="btn-submit-auth" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition shadow-lg mt-2">
+          Ingresar / Crear Cuenta
         </button>
       </form>
-
-      <!-- Paso 2: Verificación OTP simulada (Oculta al inicio) -->
-      <div id="otp-container" class="hidden space-y-3">
-        <div class="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-center">
-          <p class="text-[11px] text-emerald-400 font-medium">Código de seguridad generado:</p>
-          <p id="generated-otp" class="text-lg font-mono font-extrabold text-white tracking-widest mt-0.5">8492</p>
-        </div>
-
-        <div>
-          <label class="text-[11px] text-slate-400 block mb-1">Ingresa el código mostrado arriba:</label>
-          <input id="input-otp" type="text" maxlength="4" placeholder="0000" 
-                 class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-center text-sm font-mono text-white tracking-widest focus:outline-none focus:border-emerald-400">
-        </div>
-
-        <button id="btn-verify-otp" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition shadow-lg">
-          Confirmar y Entrar al Panel
-        </button>
-      </div>
-
-      <p class="text-[10px] text-center text-slate-500">
-        Tus datos están protegidos bajo cifrado de red privada TRON.
-      </p>
     </div>
   </div>
 
@@ -82,13 +54,13 @@
   <main class="max-w-md mx-auto min-h-screen bg-slate-900 border-x border-slate-800 flex flex-col justify-between relative shadow-2xl">
     
     <div>
-      <!-- Barra superior / Header con Identificador de Usuario -->
+      <!-- Header -->
       <header class="p-4 flex items-center justify-between border-b border-slate-800 bg-slate-950/40">
         <div class="flex items-center gap-2">
           <i class="fa-solid fa-bolt text-emerald-400 text-xl"></i>
           <div>
             <span class="font-bold tracking-wide text-white text-xs block">QUANTUM AI</span>
-            <span id="user-display-id" class="text-[10px] text-slate-400 font-mono">ID: #TRX-Invitado</span>
+            <span id="user-display-id" class="text-[10px] text-slate-400 font-mono">ID: #Cargando...</span>
           </div>
         </div>
         <div class="flex items-center gap-3">
@@ -101,437 +73,429 @@
         </div>
       </header>
 
-      <!-- Notificación en vivo / Social Proof -->
+      <!-- Notificación Feed Social -->
       <section class="bg-slate-950/60 border-b border-slate-800/80 px-4 py-2">
         <div class="flex items-center gap-2 text-xs text-slate-400">
           <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-          <p id="live-toast" class="truncate">Usuario <span class="text-slate-200 font-mono">0x4F...9B</span> acaba de recargar <span class="text-emerald-400 font-semibold">$350 USDT</span></p>
+          <p id="live-toast" class="truncate">Usuario <span class="text-slate-200 font-mono">0x4F...9B</span> recargó <span class="text-emerald-400 font-semibold">$50 USDT ($80.000 ARS)</span></p>
         </div>
       </section>
 
-      <!-- Balance de cuenta -->
-      <section class="p-4 mx-4 mt-4 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-850 border border-slate-700/60 shadow-lg">
+      <!-- Tasa ARS -->
+      <section class="mx-4 mt-3 px-3 py-1.5 rounded-xl bg-slate-800/60 border border-slate-700/60 flex items-center justify-between text-xs">
+        <span class="text-slate-400 flex items-center gap-1.5">
+          <i class="fa-solid fa-money-bill-transfer text-emerald-400"></i> Referencia P2P:
+        </span>
+        <span class="font-mono font-bold text-slate-200">1 USDT = <span class="text-emerald-400">$1.600</span> ARS</span>
+      </section>
+
+      <!-- Balance de Cuenta -->
+      <section class="p-4 mx-4 mt-3 rounded-2xl bg-gradient-to-br from-slate-800 to-slate-850 border border-slate-700/60 shadow-lg">
         <div class="flex items-center justify-between">
-          <span class="text-xs text-slate-400 font-medium">Balance Total Estimado</span>
-          <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/20">Protegido</span>
+          <span class="text-xs text-slate-400 font-medium">Balance Disponible</span>
+          <span id="pending-badge" class="text-[10px] hidden bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded-full border border-amber-500/30">Comprobante en revisión</span>
         </div>
-        <h1 class="text-3xl font-extrabold text-white mt-1">$0.00 <span class="text-sm font-normal text-slate-400">USDT</span></h1>
+        <h1 id="user-balance-usd" class="text-3xl font-extrabold text-white mt-1">$0.00 <span class="text-sm font-normal text-slate-400">USDT</span></h1>
+        <p id="user-balance-ars" class="text-xs text-slate-400 font-mono mt-0.5">≈ $0 ARS</p>
         
         <div class="grid grid-cols-2 gap-3 mt-4">
-          <button id="open-deposit-btn" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2 rounded-xl text-sm transition shadow-md">
-            <i class="fa-solid fa-arrow-down mr-1"></i> Recargar
+          <button id="open-deposit-btn" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold py-2 rounded-xl text-sm transition shadow-md flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-arrow-down"></i> Depositar
           </button>
-          <button id="open-withdraw-btn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold py-2 rounded-xl text-sm border border-slate-700 transition">
-            <i class="fa-solid fa-arrow-up mr-1"></i> Retirar
+          <button id="open-withdraw-btn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold py-2 rounded-xl text-sm border border-slate-700 transition flex items-center justify-center gap-1.5">
+            <i class="fa-solid fa-arrow-up"></i> Retirar
           </button>
         </div>
       </section>
 
-      <!-- Botón destacado Soporte Telegram -->
-      <section class="px-4 mt-3">
-        <a href="https://t.me/+7obUJU1X2sg0NGEx" target="_blank" class="flex items-center justify-between p-3 rounded-xl bg-sky-500/10 border border-sky-500/30 text-sky-400 hover:bg-sky-500/20 transition">
-          <div class="flex items-center gap-3">
-            <i class="fa-brands fa-telegram text-2xl"></i>
-            <div>
-              <p class="text-xs font-semibold text-white">Canal Oficial & Asesoría</p>
-              <p class="text-[11px] text-slate-400">Atención personalizada y dudas 24/7</p>
-            </div>
-          </div>
-          <i class="fa-solid fa-chevron-right text-xs"></i>
-        </a>
-      </section>
-
-      <!-- Calculadora / Simulador de Ganancias -->
-      <section class="p-4 mx-4 mt-4 rounded-2xl bg-slate-800/40 border border-slate-750">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-3 flex items-center gap-2">
-          <i class="fa-solid fa-calculator text-emerald-400"></i> Calculadora de Retorno
-        </h2>
+      <!-- Simulador / Calculadora -->
+      <section class="p-4 mx-4 mt-3 rounded-2xl bg-slate-800/40 border border-slate-750">
+        <div class="flex justify-between items-center mb-3">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
+            <i class="fa-solid fa-calculator text-emerald-400"></i> Calculadora de Rentabilidad
+          </h2>
+          <span class="text-[10px] text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">USD / ARS</span>
+        </div>
+        
         <div class="space-y-3">
           <div>
-            <label class="text-[11px] text-slate-400 block mb-1">Monto a simular (USDT):</label>
-            <input id="calc-amount" type="number" value="100" min="10" step="10" 
-                   class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-400 font-mono">
-          </div>
-          <div>
-            <label class="text-[11px] text-slate-400 block mb-1">Selecciona el plan:</label>
-            <select id="calc-plan" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-400">
-              <option value="0.025" data-days="15">Starter Bot (2.5% diario - 15 días)</option>
-              <option value="0.04" data-days="30" selected>Pro Bot (4.0% diario - 30 días)</option>
-              <option value="0.065" data-days="60">Ultra Bot (6.5% diario - 60 días)</option>
+            <div class="flex justify-between items-center mb-1">
+              <label class="text-[11px] text-slate-400">Monto seleccionado:</label>
+              <span id="calc-ars-equivalent" class="text-[11px] font-mono text-emerald-400 font-semibold">≈ $16.000 ARS</span>
+            </div>
+            <select id="calc-plan-select" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-400 font-mono">
+              <option value="10" data-rate="0.025" data-days="15">$10 USDT (15 días - 2.5% / día)</option>
+              <option value="25" data-rate="0.028" data-days="20">$25 USDT (20 días - 2.8% / día)</option>
+              <option value="30" data-rate="0.030" data-days="20">$30 USDT (20 días - 3.0% / día)</option>
+              <option value="50" data-rate="0.032" data-days="25">$50 USDT (25 días - 3.2% / día)</option>
+              <option value="75" data-rate="0.035" data-days="25">$75 USDT (25 días - 3.5% / día)</option>
+              <option value="100" data-rate="0.040" data-days="30">$100 USDT (30 días - 4.0% / día)</option>
+              <option value="250" data-rate="0.042" data-days="30">$250 USDT (30 días - 4.2% / día)</option>
+              <option value="300" data-rate="0.045" data-days="30">$300 USDT (30 días - 4.5% / día)</option>
+              <option value="500" data-rate="0.050" data-days="45">$500 USDT (45 días - 5.0% / día)</option>
+              <option value="750" data-rate="0.055" data-days="45">$750 USDT (45 días - 5.5% / día)</option>
+              <option value="1000" data-rate="0.060" data-days="60">$1000 USDT (60 días - 6.0% / día)</option>
             </select>
           </div>
-          <div class="p-3 bg-slate-900/80 rounded-xl border border-slate-800 grid grid-cols-2 gap-2 text-center">
-            <div>
+
+          <div class="p-3 bg-slate-900/90 rounded-xl border border-slate-800 grid grid-cols-2 gap-2 text-center">
+            <div class="border-r border-slate-800 pr-1">
               <span class="text-[10px] text-slate-400 block">Ganancia Diaria</span>
-              <span id="daily-return" class="text-sm font-bold text-emerald-400 font-mono">+$4.00 USDT</span>
+              <span id="daily-usd" class="text-xs font-bold text-emerald-400 font-mono block">+$0.25 USDT</span>
+              <span id="daily-ars" class="text-[10px] text-slate-400 font-mono block">+$400 ARS</span>
             </div>
-            <div>
-              <span class="text-[10px] text-slate-400 block">Retorno Total Estimado</span>
-              <span id="total-return" class="text-sm font-bold text-white font-mono">$220.00 USDT</span>
+            <div class="pl-1">
+              <span class="text-[10px] text-slate-400 block">Retorno Total</span>
+              <span id="total-usd" class="text-xs font-bold text-white font-mono block">$13.75 USDT</span>
+              <span id="total-ars" class="text-[10px] text-emerald-400 font-mono font-bold block">≈ $22.000 ARS</span>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- Planes Disponibles -->
+      <!-- Lista de Planes de Depósito -->
       <section class="p-4">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-3">Planes Disponibles</h2>
-        <div class="space-y-3">
-          <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-between">
-            <div>
-              <h3 class="font-semibold text-white text-sm">Plan Bot Starter</h3>
-              <p class="text-xs text-emerald-400 mt-0.5">2.5% diario <span class="text-slate-400">• 15 días</span></p>
-              <p class="text-[11px] text-slate-500 mt-1">Mínimo: $50 USDT</p>
-            </div>
-            <button class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-100 text-xs font-medium rounded-lg transition border border-slate-600">
-              Activar
-            </button>
-          </div>
-
-          <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-between">
-            <div>
-              <h3 class="font-semibold text-white text-sm">Plan Bot Pro</h3>
-              <p class="text-xs text-emerald-400 mt-0.5">4.0% diario <span class="text-slate-400">• 30 días</span></p>
-              <p class="text-[11px] text-slate-500 mt-1">Mínimo: $200 USDT</p>
-            </div>
-            <button class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg transition">
-              Activar
-            </button>
-          </div>
-
-          <div class="p-4 rounded-xl bg-slate-800/80 border border-slate-700 flex items-center justify-between">
-            <div>
-              <h3 class="font-semibold text-white text-sm">Plan Bot Ultra</h3>
-              <p class="text-xs text-emerald-400 mt-0.5">6.5% diario <span class="text-slate-400">• 60 días</span></p>
-              <p class="text-[11px] text-slate-500 mt-1">Mínimo: $500 USDT</p>
-            </div>
-            <button class="px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-100 text-xs font-medium rounded-lg transition border border-slate-600">
-              Activar
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- Preguntas Frecuentes (FAQ Acordeón) -->
-      <section class="p-4 border-t border-slate-800">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-3">Preguntas Frecuentes</h2>
-        <div class="space-y-2">
-          <details class="bg-slate-800/50 rounded-xl p-3 border border-slate-750 text-xs cursor-pointer group">
-            <summary class="font-medium text-slate-200 flex justify-between items-center outline-none list-none">
-              <span>¿Cuál es el depósito mínimo?</span>
-              <i class="fa-solid fa-chevron-down text-slate-400 text-[10px] group-open:rotate-180 transition"></i>
-            </summary>
-            <p class="mt-2 text-slate-400 leading-relaxed">El depósito mínimo para comenzar a operar con el plan Starter es de $50 USDT.</p>
-          </details>
-          <details class="bg-slate-800/50 rounded-xl p-3 border border-slate-750 text-xs cursor-pointer group">
-            <summary class="font-medium text-slate-200 flex justify-between items-center outline-none list-none">
-              <span>¿Cómo se acreditan los rendimientos?</span>
-              <i class="fa-solid fa-chevron-down text-slate-400 text-[10px] group-open:rotate-180 transition"></i>
-            </summary>
-            <p class="mt-2 text-slate-400 leading-relaxed">Los retornos diarios se calculan automáticamente cada 24 horas y se reflejan en tu saldo disponible.</p>
-          </details>
-          <details class="bg-slate-800/50 rounded-xl p-3 border border-slate-750 text-xs cursor-pointer group">
-            <summary class="font-medium text-slate-200 flex justify-between items-center outline-none list-none">
-              <span>¿Cuánto tardan los retiros?</span>
-              <i class="fa-solid fa-chevron-down text-slate-400 text-[10px] group-open:rotate-180 transition"></i>
-            </summary>
-            <p class="mt-2 text-slate-400 leading-relaxed">Los retiros se tramitan directamente a tu billetera TRC20 en un promedio de 10 a 30 minutos.</p>
-          </details>
-          <details class="bg-slate-800/50 rounded-xl p-3 border border-slate-750 text-xs cursor-pointer group">
-            <summary class="font-medium text-slate-200 flex justify-between items-center outline-none list-none">
-              <span>¿Cómo contacto a soporte?</span>
-              <i class="fa-solid fa-chevron-down text-slate-400 text-[10px] group-open:rotate-180 transition"></i>
-            </summary>
-            <p class="mt-2 text-slate-400 leading-relaxed">Puedes resolver consultas o verificar transacciones en nuestro canal y chat de soporte en Telegram.</p>
-          </details>
+        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-3">Planes de Depósito</h2>
+        <div id="plans-container" class="space-y-2.5">
+          <!-- Generado automáticamente por JavaScript con los 11 planes -->
         </div>
       </section>
     </div>
 
-    <!-- Aviso Legal -->
-    <footer class="p-4 text-center border-t border-slate-800/60">
-      <p class="text-[10px] text-slate-500 leading-relaxed">
-        Aviso de seguridad: Los fondos y transacciones son validados directamente mediante contratos inteligentes TRC20.
-      </p>
-    </footer>
-
-    <!-- Barra de navegación inferior fija -->
-    <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-slate-950/95 backdrop-blur border-t border-slate-800 grid grid-cols-4 py-2.5 text-center text-xs z-40">
+    <!-- Navegación Inferior -->
+    <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-slate-950/95 backdrop-blur border-t border-slate-800 grid grid-cols-3 py-2.5 text-center text-xs z-40">
       <button class="text-emerald-400 flex flex-col items-center gap-1">
         <i class="fa-solid fa-house"></i>
         <span>Inicio</span>
       </button>
-      <button class="text-slate-400 hover:text-slate-200 flex flex-col items-center gap-1">
-        <i class="fa-solid fa-chart-pie"></i>
-        <span>Planes</span>
+      <button onclick="document.getElementById('open-deposit-btn').click()" class="text-slate-400 hover:text-slate-200 flex flex-col items-center gap-1">
+        <i class="fa-solid fa-wallet"></i>
+        <span>Depositar</span>
       </button>
       <a href="https://t.me/+7obUJU1X2sg0NGEx" target="_blank" class="text-slate-400 hover:text-sky-400 flex flex-col items-center gap-1">
         <i class="fa-brands fa-telegram"></i>
-        <span>Telegram</span>
+        <span>Soporte</span>
       </a>
-      <button class="text-slate-400 hover:text-slate-200 flex flex-col items-center gap-1">
-        <i class="fa-solid fa-user"></i>
-        <span>Perfil</span>
-      </button>
     </nav>
 
     <!-- Modal de Depósito -->
     <div id="deposit-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-      <div class="bg-slate-900 border border-slate-750 w-full max-w-sm rounded-2xl p-5 shadow-2xl space-y-4">
+      <div class="bg-slate-900 border border-slate-750 w-full max-w-sm rounded-2xl p-5 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
         <div class="flex items-center justify-between">
           <h3 class="text-sm font-bold text-white flex items-center gap-2">
-            <i class="fa-solid fa-wallet text-emerald-400"></i> Recargar Saldo
+            <i class="fa-solid fa-wallet text-emerald-400"></i> Métodos de Depósito
           </h3>
           <button id="close-deposit-btn" class="text-slate-400 hover:text-white">
             <i class="fa-solid fa-xmark text-lg"></i>
           </button>
         </div>
 
-        <div class="bg-slate-800/60 p-2.5 rounded-xl border border-slate-700/60 text-xs text-slate-300 flex justify-between">
-          <span>Red: <strong class="text-white">TRON (TRC20)</strong></span>
-          <span>Moneda: <strong class="text-emerald-400">USDT</strong></span>
+        <!-- Selector de Métodos -->
+        <div class="grid grid-cols-2 p-1 bg-slate-950 rounded-xl border border-slate-800 text-xs">
+          <button id="tab-crypto" class="py-1.5 rounded-lg font-semibold bg-emerald-500 text-slate-950 transition">
+            USDT (TRC20)
+          </button>
+          <button id="tab-ars" class="py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white transition">
+            Pesos (Lemon)
+          </button>
         </div>
 
-        <div class="flex justify-center py-1">
-          <img id="qr-img" 
-               src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=TEvGPxqED9D5UKk19gEzcW1u12ADWM8Nq9" 
-               alt="QR Depósito" 
-               class="w-36 h-36 rounded-xl border-2 border-slate-700 p-1 bg-white">
-        </div>
-
-        <div>
-          <label class="text-[11px] text-slate-400 block mb-1">Dirección de depósito (TRC20):</label>
-          <div class="flex items-center bg-slate-950 border border-slate-800 rounded-xl p-2 gap-2">
-            <input id="wallet-address" type="text" readonly value="TEvGPxqED9D5UKk19gEzcW1u12ADWM8Nq9" 
-                   class="bg-transparent text-xs text-slate-200 w-full outline-none select-all font-mono truncate">
-            <button id="copy-btn" class="px-3 py-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg transition shrink-0">
-              Copiar
-            </button>
+        <!-- Vista 1: Cripto USDT -->
+        <div id="deposit-crypto-view" class="space-y-3">
+          <div class="flex justify-center py-1">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TEvGPxqED9D5UKk19gEzcW1u12ADWM8Nq9" 
+                 alt="QR Depósito" class="w-32 h-32 rounded-xl border-2 border-slate-700 p-1 bg-white">
+          </div>
+          <div>
+            <label class="text-[11px] text-slate-400 block mb-1">Dirección TRC20 Oficial:</label>
+            <div class="flex items-center bg-slate-950 border border-slate-800 rounded-xl p-2 gap-2">
+              <input id="crypto-addr" type="text" readonly value="TEvGPxqED9D5UKk19gEzcW1u12ADWM8Nq9" class="bg-transparent text-xs text-slate-200 w-full outline-none select-all font-mono truncate">
+              <button onclick="copiarTexto('crypto-addr', this)" class="px-3 py-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg transition shrink-0">Copiar</button>
+            </div>
           </div>
         </div>
 
-        <a href="https://t.me/+7obUJU1X2sg0NGEx" target="_blank" class="block w-full py-2.5 bg-sky-500 hover:bg-sky-400 text-white font-semibold text-xs text-center rounded-xl transition">
-          <i class="fa-brands fa-telegram mr-1"></i> Notificar comprobante
+        <!-- Vista 2: Transferencia ARS Lemon -->
+        <div id="deposit-ars-view" class="space-y-3 hidden">
+          <div class="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl space-y-1">
+            <span class="text-[11px] text-emerald-400 block font-medium">Transferencia Bancaria / Billetera Virtual:</span>
+            <p class="text-xs text-slate-200">Cotización fijada: <strong>1 USDT = $1.600 ARS</strong></p>
+          </div>
+          <div>
+            <label class="text-[11px] text-slate-400 block mb-1">Alias Oficial Lemon Cash:</label>
+            <div class="flex items-center bg-slate-950 border border-slate-800 rounded-xl p-2 gap-2">
+              <input id="lemon-alias" type="text" readonly value="carnuz.dicho.LEMON" class="bg-transparent text-xs font-bold text-emerald-400 w-full outline-none select-all font-mono">
+              <button onclick="copiarTexto('lemon-alias', this)" class="px-3 py-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg transition shrink-0">Copiar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formulario Notificar Comprobante -->
+        <div class="border-t border-slate-800 pt-3 space-y-2">
+          <label class="text-[11px] text-slate-300 font-bold block">Registrar Depósito Realizado:</label>
+          <input id="deposit-input-amount" type="number" placeholder="Monto depositado (ej: 30 USD)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-400 font-mono">
+          <input id="deposit-input-hash" type="text" placeholder="N° de Comprobante / Hash / Operación" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-400 font-mono">
+          
+          <button id="btn-submit-deposit" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition">
+            Enviar Comprobante a Validación
+          </button>
+        </div>
+
+        <a href="https://t.me/+7obUJU1X2sg0NGEx" target="_blank" class="block w-full py-2 bg-sky-500/20 hover:bg-sky-500/30 text-sky-400 text-xs font-semibold text-center rounded-xl transition">
+          <i class="fa-brands fa-telegram mr-1"></i> Abrir Chat de Validación Telegram
         </a>
       </div>
     </div>
 
-    <!-- Modal de Retiro -->
+    <!-- Modal Retiro -->
     <div id="withdraw-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
       <div class="bg-slate-900 border border-slate-750 w-full max-w-sm rounded-2xl p-5 shadow-2xl space-y-4">
-        
         <div class="flex items-center justify-between">
           <h3 class="text-sm font-bold text-white flex items-center gap-2">
             <i class="fa-solid fa-arrow-up text-sky-400"></i> Solicitar Retiro
           </h3>
-          <button id="close-withdraw-btn" class="text-slate-400 hover:text-white">
-            <i class="fa-solid fa-xmark text-lg"></i>
-          </button>
+          <button id="close-withdraw-btn" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
         </div>
-
-        <div id="withdraw-form" class="space-y-3">
-          <div>
-            <label class="text-[11px] text-slate-400 block mb-1">Dirección de destino (USDT TRC20):</label>
-            <input id="withdraw-address" type="text" placeholder="Ej: TXyZ..." 
-                   class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-400 font-mono">
-          </div>
-
-          <div>
-            <label class="text-[11px] text-slate-400 block mb-1">Monto a retirar (Mínimo 20 USDT):</label>
-            <input id="withdraw-amount" type="number" min="20" placeholder="0.00" 
-                   class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-400 font-mono">
-          </div>
-
-          <div class="bg-slate-800/40 p-2.5 rounded-xl border border-slate-800 text-[11px] text-slate-400 space-y-1">
-            <div class="flex justify-between">
-              <span>Comisión de red:</span>
-              <span class="text-slate-200">1.00 USDT</span>
-            </div>
-            <div class="flex justify-between">
-              <span>Tiempo de llegada:</span>
-              <span class="text-emerald-400 font-medium">5 - 30 minutos</span>
-            </div>
-          </div>
-
-          <button id="confirm-withdraw-btn" class="w-full py-2.5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs text-center rounded-xl transition">
-            Confirmar Retiro
-          </button>
+        <div class="space-y-3">
+          <input id="withdraw-address" type="text" placeholder="Billetera TRC20 o Alias" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-sky-400 font-mono">
+          <input id="withdraw-amount" type="number" min="10" placeholder="Monto USDT (Mínimo $10)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-sky-400 font-mono">
+          <button id="btn-confirm-withdraw" class="w-full py-2.5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs rounded-xl transition">Confirmar Retiro</button>
         </div>
-
-        <div id="withdraw-success" class="hidden text-center py-4 space-y-3">
-          <i class="fa-solid fa-circle-check text-emerald-400 text-3xl"></i>
-          <p class="text-xs text-white font-medium">¡Solicitud recibida!</p>
-          <p class="text-[11px] text-slate-400 leading-relaxed">
-            Tu transacción está siendo procesada en la red TRON. Puedes consultar el estado en Telegram.
-          </p>
-          <a href="https://t.me/+7obUJU1X2sg0NGEx" target="_blank" class="block w-full py-2 bg-slate-800 hover:bg-slate-700 text-sky-400 font-semibold text-xs rounded-xl transition border border-slate-700">
-            Ir a Soporte
-          </a>
-        </div>
-
       </div>
     </div>
 
   </main>
 
-  <!-- ================= LÓGICA JAVASCRIPT ================= -->
   <script>
-    // 1. Manejo de Autenticación / Registro Local
-    const authScreen = document.getElementById('auth-screen');
-    const authForm = document.getElementById('auth-form');
-    const authPhone = document.getElementById('auth-phone');
-    const authPin = document.getElementById('auth-pin');
-    const otpContainer = document.getElementById('otp-container');
-    const generatedOtp = document.getElementById('generated-otp');
-    const inputOtp = document.getElementById('input-otp');
-    const btnVerifyOtp = document.getElementById('btn-verify-otp');
-    const userDisplayId = document.getElementById('user-display-id');
-    const btnLogout = document.getElementById('btn-logout');
+    const ARS_RATE = 1600;
 
-    let currentCode = '8492';
+    // 11 Planes configurados
+    const PLANS = [
+      { usd: 10, days: 15, rate: 0.025, name: "Plan Starter 10" },
+      { usd: 25, days: 20, rate: 0.028, name: "Plan Starter 25" },
+      { usd: 30, days: 20, rate: 0.030, name: "Plan Starter 30" },
+      { usd: 50, days: 25, rate: 0.032, name: "Plan Growth 50" },
+      { usd: 75, days: 25, rate: 0.035, name: "Plan Growth 75" },
+      { usd: 100, days: 30, rate: 0.040, name: "Plan Pro 100" },
+      { usd: 250, days: 30, rate: 0.042, name: "Plan Pro 250" },
+      { usd: 300, days: 30, rate: 0.045, name: "Plan Pro 300" },
+      { usd: 500, days: 45, rate: 0.050, name: "Plan Elite 500" },
+      { usd: 750, days: 45, rate: 0.055, name: "Plan Elite 750" },
+      { usd: 1000, days: 60, rate: 0.060, name: "Plan VIP 1000" }
+    ];
 
-    // Comprobar si ya existe una sesión guardada
-    function checkUserSession() {
-      const savedUser = localStorage.getItem('quantum_user_phone');
-      const savedId = localStorage.getItem('quantum_user_id');
+    function formatNumber(n) {
+      return new Intl.NumberFormat('es-AR').format(Math.round(n));
+    }
 
-      if (savedUser && savedId) {
-        authScreen.classList.add('hidden');
-        userDisplayId.innerText = `ID: #${savedId}`;
+    // Renderizado dinámico de tarjetas
+    const plansContainer = document.getElementById('plans-container');
+    plansContainer.innerHTML = PLANS.map(p => {
+      const ars = p.usd * ARS_RATE;
+      const pctTotal = (p.rate * p.days * 100).toFixed(0);
+      return `
+        <div class="p-3.5 rounded-xl bg-slate-800/70 border border-slate-700/80 flex items-center justify-between">
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-bold text-white text-xs">${p.name}</span>
+              <span class="text-[9px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-semibold">${p.days} Días</span>
+            </div>
+            <p class="text-[11px] text-emerald-400 mt-0.5">${(p.rate * 100).toFixed(1)}% diario • <span class="text-slate-400">+${pctTotal}% Total</span></p>
+            <p class="text-xs font-mono font-bold text-white mt-1">$${p.usd} USDT <span class="text-[11px] text-slate-400 font-normal">(≈ $${formatNumber(ars)} ARS)</span></p>
+          </div>
+          <button onclick="seleccionarPlan(${p.usd})" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg transition shadow">
+            Depositar
+          </button>
+        </div>
+      `;
+    }).join('');
+
+    // Gestión de Usuarios y Persistencia
+    let currentUser = null;
+
+    function getUsersDB() {
+      return JSON.parse(localStorage.getItem('quantum_users_db') || '{}');
+    }
+
+    function saveUsersDB(db) {
+      localStorage.setItem('quantum_users_db', JSON.stringify(db));
+    }
+
+    function initSession() {
+      const activePhone = localStorage.getItem('quantum_active_session');
+      if (activePhone) {
+        const db = getUsersDB();
+        if (db[activePhone]) {
+          currentUser = db[activePhone];
+          mostrarPanel();
+          return;
+        }
+      }
+      document.getElementById('auth-screen').classList.remove('hidden');
+    }
+
+    function mostrarPanel() {
+      document.getElementById('auth-screen').classList.add('hidden');
+      document.getElementById('user-display-id').innerText = `ID: #${currentUser.id}`;
+      document.getElementById('user-balance-usd').innerHTML = `$${currentUser.balance.toFixed(2)} <span class="text-sm font-normal text-slate-400">USDT</span>`;
+      document.getElementById('user-balance-ars').innerText = `≈ $${formatNumber(currentUser.balance * ARS_RATE)} ARS`;
+      
+      const badge = document.getElementById('pending-badge');
+      if (currentUser.pendingDeposit > 0) {
+        badge.classList.remove('hidden');
+        badge.innerText = `En revisión: +$${currentUser.pendingDeposit} USD`;
       } else {
-        authScreen.classList.remove('hidden');
+        badge.classList.add('hidden');
       }
     }
 
-    authForm.addEventListener('submit', (e) => {
+    document.getElementById('auth-form').addEventListener('submit', (e) => {
       e.preventDefault();
-      if (!authPhone.value || !authPin.value) return;
+      const phone = document.getElementById('auth-phone').value.trim();
+      const pin = document.getElementById('auth-pin').value.trim();
 
-      // Generar PIN de 4 dígitos simulado
-      currentCode = Math.floor(1000 + Math.random() * 9000).toString();
-      generatedOtp.innerText = currentCode;
-
-      authForm.classList.add('hidden');
-      otpContainer.classList.remove('hidden');
-    });
-
-    btnVerifyOtp.addEventListener('click', () => {
-      if (inputOtp.value.trim() === currentCode) {
-        const randomId = 'TRX-' + Math.floor(10000 + Math.random() * 90000);
-        localStorage.setItem('quantum_user_phone', authPhone.value.trim());
-        localStorage.setItem('quantum_user_id', randomId);
-        
-        checkUserSession();
+      const db = getUsersDB();
+      if (!db[phone]) {
+        // Nuevo usuario
+        db[phone] = {
+          phone: phone,
+          pin: pin,
+          id: 'TRX-' + Math.floor(10000 + Math.random() * 90000),
+          balance: 0.0,
+          pendingDeposit: 0.0
+        };
       } else {
-        alert('Código incorrecto. Ingresa el PIN que aparece en pantalla.');
+        // Validación de usuario existente
+        if (db[phone].pin !== pin) {
+          alert('PIN incorrecto para este número móvil.');
+          return;
+        }
       }
+      saveUsersDB(db);
+      localStorage.setItem('quantum_active_session', phone);
+      currentUser = db[phone];
+      mostrarPanel();
     });
 
-    btnLogout.addEventListener('click', () => {
-      if (confirm('¿Cerrar sesión en este dispositivo?')) {
-        localStorage.removeItem('quantum_user_phone');
-        localStorage.removeItem('quantum_user_id');
+    document.getElementById('btn-logout').addEventListener('click', () => {
+      if (confirm('¿Cerrar sesión?')) {
+        localStorage.removeItem('quantum_active_session');
         location.reload();
       }
     });
 
-    checkUserSession();
+    // Control Calculadora
+    const calcSelect = document.getElementById('calc-plan-select');
+    function updateCalc() {
+      const opt = calcSelect.selectedOptions[0];
+      const usd = parseFloat(opt.value);
+      const rate = parseFloat(opt.getAttribute('data-rate'));
+      const days = parseInt(opt.getAttribute('data-days'));
 
-    // 2. Modal de Depósito
-    const modal = document.getElementById('deposit-modal');
-    const openBtn = document.getElementById('open-deposit-btn');
-    const closeBtn = document.getElementById('close-deposit-btn');
-    const copyBtn = document.getElementById('copy-btn');
-    const walletInput = document.getElementById('wallet-address');
+      const ars = usd * ARS_RATE;
+      const dailyU = usd * rate;
+      const dailyA = dailyU * ARS_RATE;
+      const totalU = usd + (dailyU * days);
+      const totalA = totalU * ARS_RATE;
 
-    openBtn.addEventListener('click', () => modal.classList.remove('hidden'));
-    closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+      document.getElementById('calc-ars-equivalent').innerText = `≈ $${formatNumber(ars)} ARS`;
+      document.getElementById('daily-usd').innerText = `+$${dailyU.toFixed(2)} USDT`;
+      document.getElementById('daily-ars').innerText = `+$${formatNumber(dailyA)} ARS`;
+      document.getElementById('total-usd').innerText = `$${totalU.toFixed(2)} USDT`;
+      document.getElementById('total-ars').innerText = `≈ $${formatNumber(totalA)} ARS`;
+    }
+    calcSelect.addEventListener('change', updateCalc);
+    updateCalc();
 
-    copyBtn.addEventListener('click', () => {
-      navigator.clipboard.writeText(walletInput.value);
-      copyBtn.innerText = '¡Listo!';
-      copyBtn.classList.replace('bg-emerald-500', 'bg-emerald-600');
-      setTimeout(() => {
-        copyBtn.innerText = 'Copiar';
-        copyBtn.classList.replace('bg-emerald-600', 'bg-emerald-500');
-      }, 2000);
+    window.seleccionarPlan = function(usd) {
+      calcSelect.value = usd;
+      updateCalc();
+      document.getElementById('deposit-input-amount').value = usd;
+      document.getElementById('deposit-modal').classList.remove('hidden');
+    };
+
+    // Pestañas Depósito (Cripto vs ARS Lemon)
+    const tabCrypto = document.getElementById('tab-crypto');
+    const tabArs = document.getElementById('tab-ars');
+    const cryptoView = document.getElementById('deposit-crypto-view');
+    const arsView = document.getElementById('deposit-ars-view');
+
+    tabCrypto.addEventListener('click', () => {
+      tabCrypto.className = "py-1.5 rounded-lg font-semibold bg-emerald-500 text-slate-950 transition";
+      tabArs.className = "py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white transition";
+      cryptoView.classList.remove('hidden');
+      arsView.classList.add('hidden');
     });
 
-    // 3. Modal de Retiro
-    const withdrawModal = document.getElementById('withdraw-modal');
-    const openWithdrawBtn = document.getElementById('open-withdraw-btn');
-    const closeWithdrawBtn = document.getElementById('close-withdraw-btn');
-    const confirmWithdrawBtn = document.getElementById('confirm-withdraw-btn');
-    const withdrawForm = document.getElementById('withdraw-form');
-    const withdrawSuccess = document.getElementById('withdraw-success');
-
-    openWithdrawBtn.addEventListener('click', () => {
-      withdrawForm.classList.remove('hidden');
-      withdrawSuccess.classList.add('hidden');
-      withdrawModal.classList.remove('hidden');
+    tabArs.addEventListener('click', () => {
+      tabArs.className = "py-1.5 rounded-lg font-semibold bg-emerald-500 text-slate-950 transition";
+      tabCrypto.className = "py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white transition";
+      arsView.classList.remove('hidden');
+      cryptoView.classList.add('hidden');
     });
 
-    closeWithdrawBtn.addEventListener('click', () => withdrawModal.classList.add('hidden'));
+    window.copiarTexto = function(id, btn) {
+      const input = document.getElementById(id);
+      navigator.clipboard.writeText(input.value);
+      const prev = btn.innerText;
+      btn.innerText = '¡Listo!';
+      setTimeout(() => btn.innerText = prev, 1500);
+    };
 
-    confirmWithdrawBtn.addEventListener('click', () => {
-      const amount = parseFloat(document.getElementById('withdraw-amount').value);
-      const addr = document.getElementById('withdraw-address').value.trim();
+    // Modales abrir/cerrar
+    const depModal = document.getElementById('deposit-modal');
+    document.getElementById('open-deposit-btn').addEventListener('click', () => depModal.classList.remove('hidden'));
+    document.getElementById('close-deposit-btn').addEventListener('click', () => depModal.classList.add('hidden'));
 
-      if (!addr || isNaN(amount) || amount < 20) {
-        alert('Por favor ingresa una dirección válida y un monto mínimo de 20 USDT.');
+    const withModal = document.getElementById('withdraw-modal');
+    document.getElementById('open-withdraw-btn').addEventListener('click', () => withModal.classList.remove('hidden'));
+    document.getElementById('close-withdraw-btn').addEventListener('click', () => withModal.classList.add('hidden'));
+
+    // Envío y registro de comprobante
+    document.getElementById('btn-submit-deposit').addEventListener('click', () => {
+      const monto = parseFloat(document.getElementById('deposit-input-amount').value);
+      const hash = document.getElementById('deposit-input-hash').value.trim();
+
+      if (!monto || monto <= 0 || !hash) {
+        alert('Por favor ingresa el monto y el comprobante/hash de la transferencia.');
         return;
       }
 
-      confirmWithdrawBtn.innerText = 'Procesando...';
-      setTimeout(() => {
-        confirmWithdrawBtn.innerText = 'Confirmar Retiro';
-        withdrawForm.classList.add('hidden');
-        withdrawSuccess.classList.remove('hidden');
-      }, 1000);
+      currentUser.pendingDeposit = monto;
+      const db = getUsersDB();
+      db[currentUser.phone] = currentUser;
+      saveUsersDB(db);
+
+      mostrarPanel();
+      depModal.classList.add('hidden');
+      alert(`Comprobante por $${monto} USD registrado con éxito. Recuerda avisar por Telegram para acreditación inmediata.`);
+      window.open(`https://t.me/+7obUJU1X2sg0NGEx`, '_blank');
     });
 
-    // 4. Calculadora de Ganancias
-    const calcAmount = document.getElementById('calc-amount');
-    const calcPlan = document.getElementById('calc-plan');
-    const dailyReturn = document.getElementById('daily-return');
-    const totalReturn = document.getElementById('total-return');
+    // Función para el Administrador: Aprobar recargas manualmente desde la consola del navegador
+    window.aprobarRecarga = function(monto) {
+      if (!currentUser) return console.log("No hay usuario activo.");
+      currentUser.balance += monto;
+      currentUser.pendingDeposit = Math.max(0, currentUser.pendingDeposit - monto);
+      const db = getUsersDB();
+      db[currentUser.phone] = currentUser;
+      saveUsersDB(db);
+      mostrarPanel();
+      console.log(`¡Saldo acreditado con éxito! Nuevo balance: $${currentUser.balance} USDT`);
+    };
 
-    function updateCalculator() {
-      const amount = parseFloat(calcAmount.value) || 0;
-      const rate = parseFloat(calcPlan.value);
-      const days = parseInt(calcPlan.selectedOptions[0].getAttribute('data-days'));
-      
-      const daily = amount * rate;
-      const total = amount + (daily * days);
-
-      dailyReturn.innerText = `+$${daily.toFixed(2)} USDT`;
-      totalReturn.innerText = `$${total.toFixed(2)} USDT`;
-    }
-
-    calcAmount.addEventListener('input', updateCalculator);
-    calcPlan.addEventListener('change', updateCalculator);
-
-    // 5. Notificaciones en vivo simuladas
+    // Feed de transacciones simuladas
     const sampleAddrs = ['0x1A...8F', '0x7C...3E', '0x99...2A', '0x3D...1B', '0x88...6C'];
-    const liveToast = document.getElementById('live-toast');
-
+    const sampleAmounts = [10, 25, 30, 50, 75, 100, 250, 500];
     setInterval(() => {
-      const randomAddr = sampleAddrs[Math.floor(Math.random() * sampleAddrs.length)];
-      const randomAmount = Math.floor(Math.random() * 800) + 50;
-      const isDeposit = Math.random() > 0.3;
-      const action = isDeposit ? 'recargar' : 'retirar';
-      const color = isDeposit ? 'text-emerald-400' : 'text-sky-400';
-
-      liveToast.innerHTML = `Usuario <span class="text-slate-200 font-mono">${randomAddr}</span> acaba de ${action} <span class="${color} font-semibold">$${randomAmount} USDT</span>`;
+      const addr = sampleAddrs[Math.floor(Math.random() * sampleAddrs.length)];
+      const amt = sampleAmounts[Math.floor(Math.random() * sampleAmounts.length)];
+      const isDep = Math.random() > 0.3;
+      document.getElementById('live-toast').innerHTML = `Usuario <span class="text-slate-200 font-mono">${addr}</span> acaba de ${isDep ? 'recargar' : 'retirar'} <span class="${isDep ? 'text-emerald-400' : 'text-sky-400'} font-semibold">$${amt} USDT ($${formatNumber(amt * ARS_RATE)} ARS)</span>`;
     }, 5000);
-  // Registro del Service Worker para PWA
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-          .then(() => console.log('PWA registrada correctamente'))
-          .catch((err) => console.log('Error al registrar PWA', err));
-      });
-    }
+
+    // Iniciar verificación de sesión
+    initSession();
   </script>
 </body>
 </html>
