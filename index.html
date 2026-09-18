@@ -62,7 +62,7 @@
   <main class="max-w-md mx-auto min-h-screen bg-slate-900 border-x border-slate-800 flex flex-col justify-between relative shadow-2xl">
     
     <div>
-      <!-- Header con disparador oculto de Admin (3 toques rápidos) -->
+      <!-- Header con disparador oculto de Admin (3 toques rápidos con clave 1619) -->
       <header class="p-4 flex items-center justify-between border-b border-slate-800 bg-slate-950/40">
         <div id="admin-logo-trigger" class="flex items-center gap-2 cursor-pointer select-none">
           <i class="fa-solid fa-bolt text-emerald-400 text-xl"></i>
@@ -170,17 +170,17 @@
               <span id="calc-ars-equivalent" class="text-[11px] font-mono text-emerald-400 font-semibold">≈ $16.000 ARS</span>
             </div>
             <select id="calc-plan-select" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-emerald-400 font-mono">
-              <option value="10" data-rate="0.025" data-days="15">$10 USDT (15 días - 2.5% / día)</option>
-              <option value="25" data-rate="0.028" data-days="20">$25 USDT (20 días - 2.8% / día)</option>
-              <option value="30" data-rate="0.030" data-days="20">$30 USDT (20 días - 3.0% / día)</option>
-              <option value="50" data-rate="0.032" data-days="25">$50 USDT (25 días - 3.2% / día)</option>
-              <option value="75" data-rate="0.035" data-days="25">$75 USDT (25 días - 3.5% / día)</option>
-              <option value="100" data-rate="0.040" data-days="30">$100 USDT (30 días - 4.0% / día)</option>
-              <option value="250" data-rate="0.042" data-days="30">$250 USDT (30 días - 4.2% / día)</option>
-              <option value="300" data-rate="0.045" data-days="30">$300 USDT (30 días - 4.5% / día)</option>
-              <option value="500" data-rate="0.050" data-days="45">$500 USDT (45 días - 5.0% / día)</option>
-              <option value="750" data-rate="0.055" data-days="45">$750 USDT (45 días - 5.5% / día)</option>
-              <option value="1000" data-rate="0.060" data-days="60">$1000 USDT (60 días - 6.0% / día)</option>
+              <option value="10" data-rate="0.025" data-days="15">Cobre: $10 USDT (15 días - 2.5% / día)</option>
+              <option value="25" data-rate="0.028" data-days="20">Hierro: $25 USDT (20 días - 2.8% / día)</option>
+              <option value="30" data-rate="0.030" data-days="20">Níquel: $30 USDT (20 días - 3.0% / día)</option>
+              <option value="50" data-rate="0.032" data-days="25">Plata: $50 USDT (25 días - 3.2% / día)</option>
+              <option value="75" data-rate="0.035" data-days="25">Titanio: $75 USDT (25 días - 3.5% / día)</option>
+              <option value="100" data-rate="0.040" data-days="30">Oro: $100 USDT (30 días - 4.0% / día)</option>
+              <option value="250" data-rate="0.042" data-days="30">Platino: $250 USDT (30 días - 4.2% / día)</option>
+              <option value="300" data-rate="0.045" data-days="30">Osmio: $300 USDT (30 días - 4.5% / día)</option>
+              <option value="500" data-rate="0.050" data-days="45">Diamante Esmeralda: $500 USDT (45 días - 5.0% / día)</option>
+              <option value="750" data-rate="0.055" data-days="45">Diamante Azul: $750 USDT (45 días - 5.5% / día)</option>
+              <option value="1000" data-rate="0.060" data-days="60">Diamante VIP: $1000 USDT (60 días - 6.0% / día)</option>
             </select>
           </div>
 
@@ -199,12 +199,12 @@
         </div>
       </section>
 
-      <!-- Lista de 11 Planes con CUPOS ESMERALDA -->
+      <!-- Lista de 11 Planes con CUPOS REALISTAS -->
       <section class="p-4">
         <div class="flex items-center justify-between mb-3">
           <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300">Planes de Inversión</h2>
           <span class="text-[10px] text-emerald-400 font-medium flex items-center gap-1 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-            <i class="fa-solid fa-circle-check"></i> Rondas Abiertas
+            <i class="fa-solid fa-atom"></i> Ciclos Activos
           </span>
         </div>
         <div id="plans-container" class="space-y-3"></div>
@@ -227,7 +227,7 @@
       </a>
     </nav>
 
-    <!-- Modal Depósito con TU CVU REAL -->
+    <!-- Modal Depósito con CVU REAL -->
     <div id="deposit-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
       <div class="bg-slate-900 border border-slate-750 w-full max-w-sm rounded-2xl p-5 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
         <div class="flex items-center justify-between">
@@ -336,18 +336,19 @@
   <script>
     const ARS_RATE = 1600;
 
+    // Cupos ajustados para etapa de lanzamiento
     const PLANS = [
-      { usd: 10, days: 15, rate: 0.025, name: "Plan Starter 10", quedan: 30, de: 50 },
-      { usd: 25, days: 20, rate: 0.028, name: "Plan Starter 25", quedan: 24, de: 40 },
-      { usd: 30, days: 20, rate: 0.030, name: "Plan Starter 30", quedan: 19, de: 35 },
-      { usd: 50, days: 25, rate: 0.032, name: "Plan Growth 50", quedan: 12, de: 30 },
-      { usd: 75, days: 25, rate: 0.035, name: "Plan Growth 75", quedan: 9, de: 25 },
-      { usd: 100, days: 30, rate: 0.040, name: "Plan Pro 100", quedan: 7, de: 20 },
-      { usd: 250, days: 30, rate: 0.042, name: "Plan Pro 250", quedan: 5, de: 15 },
-      { usd: 300, days: 30, rate: 0.045, name: "Plan Pro 300", quedan: 4, de: 12 },
-      { usd: 500, days: 45, rate: 0.050, name: "Plan Elite 500", quedan: 3, de: 10 },
-      { usd: 750, days: 45, rate: 0.055, name: "Plan Elite 750", quedan: 2, de: 8 },
-      { usd: 1000, days: 60, rate: 0.060, name: "Plan VIP 1000", quedan: 1, de: 5 }
+      { usd: 10, days: 15, rate: 0.025, name: "Plan Cobre (Cu)", symbol: "Cu", num: "29", quedan: 80, de: 100 }, // 20% consumido
+      { usd: 25, days: 20, rate: 0.028, name: "Plan Hierro (Fe)", symbol: "Fe", num: "26", quedan: 42, de: 50 },  // 8 ocupados
+      { usd: 30, days: 20, rate: 0.030, name: "Plan Níquel (Ni)", symbol: "Ni", num: "28", quedan: 34, de: 40 },  // 6 ocupados
+      { usd: 50, days: 25, rate: 0.032, name: "Plan Plata (Ag)", symbol: "Ag", num: "47", quedan: 25, de: 35 },   // 10 ocupados
+      { usd: 75, days: 25, rate: 0.035, name: "Plan Titanio (Ti)", symbol: "Ti", num: "22", quedan: 23, de: 30 }, // 7 ocupados
+      { usd: 100, days: 30, rate: 0.040, name: "Plan Oro (Au)", symbol: "Au", num: "79", quedan: 19, de: 25 },   // 6 ocupados
+      { usd: 250, days: 30, rate: 0.042, name: "Plan Platino (Pt)", symbol: "Pt", num: "78", quedan: 15, de: 20 },// 5 ocupados
+      { usd: 300, days: 30, rate: 0.045, name: "Plan Osmio (Os)", symbol: "Os", num: "76", quedan: 11, de: 16 },  // 5 ocupados
+      { usd: 500, days: 45, rate: 0.050, name: "Diamante Esmeralda", symbol: "💎", num: "C", quedan: 9, de: 15 }, // 6 ocupados
+      { usd: 750, days: 45, rate: 0.055, name: "Diamante Azul", symbol: "💠", num: "C", quedan: 7, de: 12 },     // 5 ocupados
+      { usd: 1000, days: 60, rate: 0.060, name: "Diamante Negro VIP", symbol: "👑", num: "VIP", quedan: 7, de: 10 } // 3 ocupados
     ];
 
     function formatNumber(n) {
@@ -363,23 +364,28 @@
       return `
         <div class="p-3.5 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-2.5">
           <div class="flex items-center justify-between">
-            <div>
-              <div class="flex items-center gap-2">
-                <span class="font-bold text-white text-xs">${p.name}</span>
-                <span class="text-[9px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-semibold">${p.days} Días</span>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex flex-col items-center justify-center shrink-0">
+                <span class="text-[9px] text-emerald-400 font-mono leading-none">${p.num}</span>
+                <span class="text-xs font-extrabold text-white leading-tight">${p.symbol}</span>
               </div>
-              <p class="text-[11px] text-emerald-400 mt-0.5">${(p.rate * 100).toFixed(1)}% diario • <span class="text-slate-400">+${pctTotal}% Total</span></p>
-              <p class="text-xs font-mono font-bold text-white mt-1">$${p.usd} USDT <span class="text-[11px] text-slate-400 font-normal">(≈ $${formatNumber(ars)} ARS)</span></p>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-white text-xs">${p.name}</span>
+                  <span class="text-[9px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-semibold">${p.days} Días</span>
+                </div>
+                <p class="text-[11px] text-emerald-400 mt-0.5">${(p.rate * 100).toFixed(1)}% diario • <span class="text-slate-400">+${pctTotal}% Total</span></p>
+                <p class="text-xs font-mono font-bold text-white mt-0.5">$${p.usd} USDT <span class="text-[11px] text-slate-400 font-normal">(≈ $${formatNumber(ars)} ARS)</span></p>
+              </div>
             </div>
-            <button onclick="seleccionarPlan(${p.usd})" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg transition shadow">
+            <button onclick="seleccionarPlan(${p.usd})" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg transition shadow shrink-0">
               Depositar
             </button>
           </div>
 
-          <div class="pt-2 border-t border-slate-800/80">
+          <div class="pt-1.5 border-t border-slate-800/80">
             <div class="flex justify-between items-center text-[10px] mb-1">
               <span class="text-emerald-400 font-semibold font-mono">Quedan ${p.quedan} de ${p.de} cupos</span>
-              <span class="text-slate-400 font-mono">${porcentajeConsumido}% asignado</span>
             </div>
             <div class="w-full bg-slate-950 rounded-full h-1.5 overflow-hidden border border-slate-800">
               <div class="bg-emerald-400 h-1.5 rounded-full shadow-[0_0_8px_rgba(52,211,153,0.5)]" style="width: ${porcentajeConsumido}%"></div>
@@ -457,7 +463,6 @@
       }).join('');
     }
 
-    // Registro y Login
     document.getElementById('auth-form').addEventListener('submit', (e) => {
       e.preventDefault();
       const phone = document.getElementById('auth-phone').value.trim();
