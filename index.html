@@ -62,7 +62,7 @@
   <main class="max-w-md mx-auto min-h-screen bg-slate-900 border-x border-slate-800 flex flex-col justify-between relative shadow-2xl">
     
     <div>
-      <!-- Header con disparador oculto de Admin (3 clics rápidos) -->
+      <!-- Header con disparador oculto de Admin (3 toques rápidos) -->
       <header class="p-4 flex items-center justify-between border-b border-slate-800 bg-slate-950/40">
         <div id="admin-logo-trigger" class="flex items-center gap-2 cursor-pointer select-none">
           <i class="fa-solid fa-bolt text-emerald-400 text-xl"></i>
@@ -199,7 +199,7 @@
         </div>
       </section>
 
-      <!-- Lista de 11 Planes con CUPOS REALISTAS -->
+      <!-- Lista de 11 Planes -->
       <section class="p-4">
         <div class="flex items-center justify-between mb-3">
           <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300">Planes de Inversión</h2>
@@ -227,7 +227,7 @@
       </a>
     </nav>
 
-    <!-- Modal Depósito con CVU REAL -->
+    <!-- Modal Depósito con TU NUEVO CVU -->
     <div id="deposit-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
       <div class="bg-slate-900 border border-slate-750 w-full max-w-sm rounded-2xl p-5 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
         <div class="flex items-center justify-between">
@@ -263,7 +263,7 @@
           <div>
             <label class="text-[11px] text-slate-400 block mb-1">CVU Oficial para transferencias:</label>
             <div class="flex items-center bg-slate-950 border border-slate-800 rounded-xl p-2 gap-2">
-              <input id="cvu-number" type="text" readonly value="0000085700274203412674" class="bg-transparent text-xs font-bold text-emerald-400 w-full outline-none select-all font-mono">
+              <input id="cvu-number" type="text" readonly value="0000168300000008340656" class="bg-transparent text-xs font-bold text-emerald-400 w-full outline-none select-all font-mono">
               <button onclick="copiarTexto('cvu-number', this)" class="px-3 py-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg transition shrink-0">Copiar</button>
             </div>
             <p class="text-[10px] text-slate-400 mt-1">Titular verificado para acreditación directa.</p>
@@ -404,7 +404,6 @@
       localStorage.setItem('quantum_users_db', JSON.stringify(db));
     }
 
-    // Comprobar parámetros de referido en la URL al cargar
     function checkReferralParam() {
       const urlParams = new URLSearchParams(window.location.search);
       const refCode = urlParams.get('ref');
@@ -513,7 +512,6 @@
       }
     });
 
-    // Copiar enlace completo con parámetro ?ref=
     window.copiarEnlaceReferido = function(btn) {
       if (!currentUser) return;
       const refUrl = `${window.location.origin}${window.location.pathname}?ref=${currentUser.id}`;
@@ -523,7 +521,6 @@
       setTimeout(() => btn.innerText = prev, 1500);
     };
 
-    // Compartir por WhatsApp con enlace directo
     window.compartirWhatsapp = function() {
       if (!currentUser) return;
       const refUrl = `${window.location.origin}${window.location.pathname}?ref=${currentUser.id}`;
