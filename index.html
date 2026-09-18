@@ -62,7 +62,7 @@
   <main class="max-w-md mx-auto min-h-screen bg-slate-900 border-x border-slate-800 flex flex-col justify-between relative shadow-2xl">
     
     <div>
-      <!-- Header con disparador oculto de Admin (3 toques rápidos con clave 1619) -->
+      <!-- Header con disparador oculto de Admin (3 clics rápidos) -->
       <header class="p-4 flex items-center justify-between border-b border-slate-800 bg-slate-950/40">
         <div id="admin-logo-trigger" class="flex items-center gap-2 cursor-pointer select-none">
           <i class="fa-solid fa-bolt text-emerald-400 text-xl"></i>
@@ -116,7 +116,7 @@
         </div>
       </section>
 
-      <!-- SECCIÓN INVITAR Y GANAR ($2 USD) -->
+      <!-- SECCIÓN INVITAR Y GANAR ($2 USD) CON ENLACE DIRECTO -->
       <section class="mx-4 mt-3 p-3.5 rounded-2xl bg-gradient-to-r from-emerald-950/40 to-slate-900 border border-emerald-500/30">
         <div class="flex items-center justify-between mb-2">
           <div class="flex items-center gap-2">
@@ -126,14 +126,14 @@
           <span class="text-[10px] text-emerald-400 font-semibold bg-emerald-500/10 px-2 py-0.5 rounded-full">Bono Directo</span>
         </div>
         <p class="text-[11px] text-slate-400 leading-relaxed mb-2.5">
-          Gana <strong>$2 USDT</strong> por cada invitado que realice su primer depósito utilizando tu código.
+          Gana <strong>$2 USDT</strong> por cada invitado que realice su primer depósito ingresando con tu enlace.
         </p>
         <div class="flex items-center gap-2">
           <div class="bg-slate-950 border border-slate-750 px-3 py-1.5 rounded-xl flex-1 text-center font-mono font-bold text-xs text-emerald-400 select-all" id="user-referral-code">
             TRX-00000
           </div>
-          <button onclick="copiarCodigoReferido(this)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition">
-            Copiar
+          <button onclick="copiarEnlaceReferido(this)" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition">
+            Copiar Enlace
           </button>
           <button onclick="compartirWhatsapp()" class="px-3 py-1.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold rounded-xl transition flex items-center gap-1">
             <i class="fa-brands fa-whatsapp"></i> Compartir
@@ -336,19 +336,18 @@
   <script>
     const ARS_RATE = 1600;
 
-    // Cupos ajustados para etapa de lanzamiento
     const PLANS = [
-      { usd: 10, days: 15, rate: 0.025, name: "Plan Cobre (Cu)", symbol: "Cu", num: "29", quedan: 80, de: 100 }, // 20% consumido
-      { usd: 25, days: 20, rate: 0.028, name: "Plan Hierro (Fe)", symbol: "Fe", num: "26", quedan: 42, de: 50 },  // 8 ocupados
-      { usd: 30, days: 20, rate: 0.030, name: "Plan Níquel (Ni)", symbol: "Ni", num: "28", quedan: 34, de: 40 },  // 6 ocupados
-      { usd: 50, days: 25, rate: 0.032, name: "Plan Plata (Ag)", symbol: "Ag", num: "47", quedan: 25, de: 35 },   // 10 ocupados
-      { usd: 75, days: 25, rate: 0.035, name: "Plan Titanio (Ti)", symbol: "Ti", num: "22", quedan: 23, de: 30 }, // 7 ocupados
-      { usd: 100, days: 30, rate: 0.040, name: "Plan Oro (Au)", symbol: "Au", num: "79", quedan: 19, de: 25 },   // 6 ocupados
-      { usd: 250, days: 30, rate: 0.042, name: "Plan Platino (Pt)", symbol: "Pt", num: "78", quedan: 15, de: 20 },// 5 ocupados
-      { usd: 300, days: 30, rate: 0.045, name: "Plan Osmio (Os)", symbol: "Os", num: "76", quedan: 11, de: 16 },  // 5 ocupados
-      { usd: 500, days: 45, rate: 0.050, name: "Diamante Esmeralda", symbol: "💎", num: "C", quedan: 9, de: 15 }, // 6 ocupados
-      { usd: 750, days: 45, rate: 0.055, name: "Diamante Azul", symbol: "💠", num: "C", quedan: 7, de: 12 },     // 5 ocupados
-      { usd: 1000, days: 60, rate: 0.060, name: "Diamante Negro VIP", symbol: "👑", num: "VIP", quedan: 7, de: 10 } // 3 ocupados
+      { usd: 10, days: 15, rate: 0.025, name: "Plan Cobre (Cu)", symbol: "Cu", num: "29", quedan: 80, de: 100 },
+      { usd: 25, days: 20, rate: 0.028, name: "Plan Hierro (Fe)", symbol: "Fe", num: "26", quedan: 42, de: 50 },
+      { usd: 30, days: 20, rate: 0.030, name: "Plan Níquel (Ni)", symbol: "Ni", num: "28", quedan: 34, de: 40 },
+      { usd: 50, days: 25, rate: 0.032, name: "Plan Plata (Ag)", symbol: "Ag", num: "47", quedan: 25, de: 35 },
+      { usd: 75, days: 25, rate: 0.035, name: "Plan Titanio (Ti)", symbol: "Ti", num: "22", quedan: 23, de: 30 },
+      { usd: 100, days: 30, rate: 0.040, name: "Plan Oro (Au)", symbol: "Au", num: "79", quedan: 19, de: 25 },
+      { usd: 250, days: 30, rate: 0.042, name: "Plan Platino (Pt)", symbol: "Pt", num: "78", quedan: 15, de: 20 },
+      { usd: 300, days: 30, rate: 0.045, name: "Plan Osmio (Os)", symbol: "Os", num: "76", quedan: 11, de: 16 },
+      { usd: 500, days: 45, rate: 0.050, name: "Diamante Esmeralda", symbol: "💎", num: "C", quedan: 9, de: 15 },
+      { usd: 750, days: 45, rate: 0.055, name: "Diamante Azul", symbol: "💠", num: "C", quedan: 7, de: 12 },
+      { usd: 1000, days: 60, rate: 0.060, name: "Diamante Negro VIP", symbol: "👑", num: "VIP", quedan: 7, de: 10 }
     ];
 
     function formatNumber(n) {
@@ -405,7 +404,21 @@
       localStorage.setItem('quantum_users_db', JSON.stringify(db));
     }
 
+    // Comprobar parámetros de referido en la URL al cargar
+    function checkReferralParam() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const refCode = urlParams.get('ref');
+      if (refCode) {
+        const refInput = document.getElementById('auth-ref');
+        if (refInput) {
+          refInput.value = refCode.toUpperCase();
+          refInput.classList.add('border-emerald-400', 'bg-emerald-500/10');
+        }
+      }
+    }
+
     function initSession() {
+      checkReferralParam();
       const activePhone = localStorage.getItem('quantum_active_session');
       if (activePhone) {
         const db = getUsersDB();
@@ -500,18 +513,21 @@
       }
     });
 
-    window.copiarCodigoReferido = function(btn) {
+    // Copiar enlace completo con parámetro ?ref=
+    window.copiarEnlaceReferido = function(btn) {
       if (!currentUser) return;
-      navigator.clipboard.writeText(currentUser.id);
+      const refUrl = `${window.location.origin}${window.location.pathname}?ref=${currentUser.id}`;
+      navigator.clipboard.writeText(refUrl);
       const prev = btn.innerText;
-      btn.innerText = '¡Copiado!';
+      btn.innerText = '¡Enlace Copiado!';
       setTimeout(() => btn.innerText = prev, 1500);
     };
 
+    // Compartir por WhatsApp con enlace directo
     window.compartirWhatsapp = function() {
       if (!currentUser) return;
-      const url = window.location.href;
-      const msg = encodeURIComponent(`¡Únete a Quantum AI! Regístrate con mi código ${currentUser.id} para asegurar tus rendimientos diarios: ${url}`);
+      const refUrl = `${window.location.origin}${window.location.pathname}?ref=${currentUser.id}`;
+      const msg = encodeURIComponent(`¡Únete a Quantum AI! Regístrate directamente desde mi enlace para asegurar tus rendimientos diarios: ${refUrl}`);
       window.open(`https://wa.me/?text=${msg}`, '_blank');
     };
 
@@ -579,7 +595,6 @@
     document.getElementById('open-withdraw-btn').addEventListener('click', () => withModal.classList.remove('hidden'));
     document.getElementById('close-withdraw-btn').addEventListener('click', () => withModal.classList.add('hidden'));
 
-    // Envío y registro de comprobante con mensaje a Telegram
     document.getElementById('btn-submit-deposit').addEventListener('click', () => {
       const monto = parseFloat(document.getElementById('deposit-input-amount').value);
       const hash = document.getElementById('deposit-input-hash').value.trim();
@@ -615,7 +630,6 @@
       window.open(`https://t.me/+7obUJU1X2sg0NGEx?text=${mensaje}`, '_blank');
     });
 
-    // Retiros
     document.getElementById('btn-confirm-withdraw').addEventListener('click', () => {
       const amt = parseFloat(document.getElementById('withdraw-amount').value);
       const addr = document.getElementById('withdraw-address').value.trim();
@@ -648,7 +662,6 @@
       alert(`Solicitud de retiro por $${amt} USDT en proceso.`);
     });
 
-    // PANEL DE ADMINISTRADOR OCULTO CON CLAVE 1619
     let logoClicks = 0;
     let logoTimer = null;
     document.getElementById('admin-logo-trigger').addEventListener('click', () => {
@@ -673,7 +686,6 @@
       }
     });
 
-    // Acreditación de Saldo y Bono de $2 USD al Invitador
     document.getElementById('btn-admin-credit').addEventListener('click', () => {
       const monto = parseFloat(document.getElementById('admin-credit-amount').value);
       if (!monto || monto <= 0) {
@@ -715,7 +727,6 @@
       document.getElementById('admin-modal').classList.add('hidden');
     });
 
-    // Feed de transacciones en vivo
     const sampleAddrs = ['0x1A...8F', '0x7C...3E', '0x99...2A', '0x3D...1B', '0x88...6C'];
     const sampleAmounts = [10, 25, 30, 50, 75, 100, 250, 500];
     setInterval(() => {
